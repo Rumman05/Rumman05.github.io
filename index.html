@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Portfolio of Muhammad Rumman, a Computer Science student and Software Developer specializing in full-stack development, machine learning, and modern web technologies.">
   <title>Muhammad Rumman | Software Developer</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
@@ -10,10 +11,10 @@
     /* RESET & BASE */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { 
-      font-family: 'Inter', sans-serif; 
-      line-height: 1.6; 
-      color: #e5e7eb; 
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      color: #e5e7eb;
       background: linear-gradient(135deg, #0f1419 0%, #1a202c 50%, #2d3748 100%);
       min-height: 100vh;
     }
@@ -63,30 +64,31 @@
       background: rgba(15, 20, 25, 0.98);
       box-shadow: 0 8px 32px rgba(0,0,0,0.3);
     }
-    .navbar .container { 
-      display: flex; 
-      align-items: center; 
-      justify-content: space-between; 
-      padding: 1.5rem 0; 
+    .navbar .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 0;
     }
-    .logo { 
-      font-size: 1.5rem; 
-      font-weight: 700; 
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
       background: linear-gradient(135deg, #4299e1, #667eea);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      text-decoration: none;
     }
-    .nav-links { 
-      list-style: none; 
-      display: flex; 
-      gap: 2rem; 
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
     }
     .nav-links a {
-      text-decoration: none; 
-      color: #a0aec0; 
+      text-decoration: none;
+      color: #a0aec0;
       padding: 0.5rem 1rem;
-      border-radius: 8px; 
+      border-radius: 8px;
       transition: all 0.3s ease;
       font-weight: 500;
       position: relative;
@@ -103,7 +105,7 @@
       transform: translateX(-50%);
     }
     .nav-links a:hover,
-    .nav-links a.active { 
+    .nav-links a.active {
       color: #4299e1;
     }
     .nav-links a:hover::before,
@@ -120,14 +122,14 @@
       z-index: 2;
       padding-top: 6rem;
     }
-    .hero-content { 
+    .hero-content {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 4rem;
       align-items: center;
       width: 100%;
     }
-    .hero-text h1 { 
+    .hero-text h1 {
       font-size: clamp(2.5rem, 5vw, 4rem);
       font-weight: 700;
       margin-bottom: 1rem;
@@ -137,7 +139,7 @@
       background-clip: text;
       line-height: 1.2;
     }
-    .hero-text .subtitle { 
+    .hero-text .subtitle {
       font-size: 1.25rem;
       color: #a0aec0;
       margin-bottom: 2rem;
@@ -190,11 +192,14 @@
       justify-content: center;
       position: relative;
     }
-    .profile-pic img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 16px; 
+    .profile-pic {
+      width: 300px;
+      height: 300px;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      background: #1a202c; /* Fallback background */
+      padding: 4px;
     }
     .profile-pic::before {
       content: '';
@@ -217,8 +222,8 @@
     }
 
     /* SECTIONS */
-    .section { 
-      padding: 6rem 0; 
+    .section {
+      padding: 6rem 0;
       position: relative;
       z-index: 2;
     }
@@ -275,6 +280,12 @@
       font-size: 1.1rem;
       line-height: 1.8;
       color: #cbd5e0;
+    }
+    .about-text p {
+      margin-bottom: 1.5rem;
+    }
+    .about-text p:last-child {
+      margin-bottom: 0;
     }
 
     /* SKILLS */
@@ -341,8 +352,6 @@
       overflow: hidden;
       transition: all 0.3s ease;
       position: relative;
-      display: flex;
-      flex-direction: column;
     }
     .project-card:hover {
       transform: translateY(-8px);
@@ -357,27 +366,9 @@
       right: 0;
       height: 4px;
       background: linear-gradient(135deg, #4299e1, #667eea);
-      z-index: 1; /* Ensure border is above image */
     }
-    .project-image-container {
-      width: 100%;
-      height: 200px;
-      overflow: hidden;
-    }
-    .project-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.3s ease;
-    }
-    .project-card:hover .project-image {
-      transform: scale(1.05);
-    }
-    .project-content {
+    .project-header {
       padding: 2rem 2rem 1rem;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
     }
     .project-icon {
       width: 60px;
@@ -404,7 +395,6 @@
       color: #a0aec0;
       line-height: 1.6;
       margin-bottom: 1.5rem;
-      flex-grow: 1;
     }
     .project-tech {
       display: flex;
@@ -424,7 +414,6 @@
       padding: 0 2rem 2rem;
       display: flex;
       gap: 1rem;
-      margin-top: auto;
     }
     .project-link {
       color: #4299e1;
@@ -458,10 +447,14 @@
       border-radius: 12px;
       padding: 2rem 1.5rem;
       transition: all 0.3s ease;
+      text-decoration: none; /* UPDATED */
     }
     .contact-item:hover {
       background: rgba(66, 153, 225, 0.08);
       transform: translateY(-4px);
+    }
+    .contact-item:hover h4 { /* ADDED */
+      color: #4299e1;
     }
     .contact-item i {
       font-size: 2rem;
@@ -470,17 +463,9 @@
     }
     .contact-item h4 {
       color: #ffffff;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0; /* UPDATED */
       font-weight: 600;
-    }
-    .contact-item a {
-      color: #a0aec0;
-      text-decoration: none;
-      transition: color 0.3s ease;
-      word-break: break-all;
-    }
-    .contact-item a:hover {
-      color: #4299e1;
+      transition: color 0.3s ease; /* ADDED */
     }
 
     /* FOOTER */
@@ -508,7 +493,7 @@
     /* RESPONSIVE */
     @media (max-width: 768px) {
       .container { padding: 0 1rem; }
-      
+
       .nav-links {
         display: none;
         position: absolute;
@@ -522,7 +507,7 @@
       }
       .nav-links.open { display: flex; }
       .menu-toggle { display: block; }
-      
+
       .hero-content {
         grid-template-columns: 1fr;
         text-align: center;
@@ -534,16 +519,16 @@
       .profile-section {
         order: 1;
       }
-      
+
       .about-content {
         grid-template-columns: 1fr;
         gap: 2rem;
       }
-      
+
       .cta-buttons {
         justify-content: center;
       }
-      
+
       .profile-pic {
         width: 250px;
         height: 250px;
@@ -554,12 +539,12 @@
       .hero-text h1 {
         font-size: 2.5rem;
       }
-      
+
       .profile-pic {
         width: 200px;
         height: 200px;
       }
-      
+
       .projects-grid {
         grid-template-columns: 1fr;
       }
@@ -571,7 +556,7 @@
 
   <nav class="navbar" id="navbar">
     <div class="container">
-      <div class="logo">Muhammad Rumman</div>
+      <a href="#home" class="logo">Muhammad Rumman</a>
       <ul class="nav-links" id="navLinks">
         <li><a href="#home" class="active">Home</a></li>
         <li><a href="#about">About</a></li>
@@ -592,7 +577,7 @@
           <h1>Software Developer & Problem Solver</h1>
           <p class="subtitle">Computer Science Student at University of Essex</p>
           <p class="description">
-            Passionate about creating innovative solutions through clean code and modern technologies. 
+            Passionate about creating innovative solutions through clean code and modern technologies.
             Specializing in full-stack development, machine learning, and software architecture.
           </p>
           <div class="cta-buttons">
@@ -608,7 +593,7 @@
         </div>
         <div class="profile-section">
           <div class="profile-pic">
-            <img src="1715475124986.jpg" alt="A photo of Muhammad Rumman">
+            <img src="Profile.jpg" alt="Headshot of Muhammad Rumman">
           </div>
         </div>
       </div>
@@ -634,26 +619,24 @@
             <div class="stat-label">Technologies</div>
           </div>
           <div class="stat-card">
-            <div class="stat-number">5+</div>
+            <div class="stat-number">4+</div>
             <div class="stat-label">Major Projects</div>
           </div>
         </div>
         <div class="about-text">
           <p>
-            I'm a second-year Computer Science undergraduate at the University of Essex with a passion for 
-            transforming complex challenges into elegant, scalable solutions. My expertise spans across 
-            multiple programming languages and frameworks, with particular strength in Python, Java, 
+            I'm a second-year Computer Science undergraduate at the University of Essex with a passion for
+            transforming complex challenges into elegant, scalable solutions. My expertise spans across
+            multiple programming languages and frameworks, with particular strength in Python, Java,
             and modern web technologies.
           </p>
-          <br>
           <p>
-            I have hands-on experience leading machine learning projects and developing full-stack 
-            applications. My approach combines technical proficiency with creative problem-solving, 
+            I have hands-on experience leading machine learning projects and developing full-stack
+            applications. My approach combines technical proficiency with creative problem-solving,
             always focusing on writing clean, maintainable code and following industry best practices.
           </p>
-          <br>
           <p>
-            Currently seeking opportunities to contribute to innovative projects and collaborate with 
+            Currently seeking opportunities to contribute to innovative projects and collaborate with
             forward-thinking teams in the software development industry.
           </p>
         </div>
@@ -721,19 +704,16 @@
         </p>
       </div>
       <div class="projects-grid">
-        
+
         <div class="project-card">
-          <div class="project-image-container">
-            <img src="assets/cosmic-defender.jpg" alt="Cosmic Defender Project Screenshot" class="project-image">
-          </div>
-          <div class="project-content">
+          <div class="project-header">
             <div class="project-icon">
               <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java">
             </div>
             <h3>Cosmic Defender</h3>
             <p>
-              An immersive arcade-style galaxy defense game featuring dynamic gameplay mechanics, 
-              power-up systems, and retro-inspired graphics. Built with object-oriented design 
+              An immersive arcade-style galaxy defense game featuring dynamic gameplay mechanics,
+              power-up systems, and retro-inspired graphics. Built with object-oriented design
               principles and optimized performance.
             </p>
             <div class="project-tech">
@@ -743,7 +723,7 @@
             </div>
           </div>
           <div class="project-links">
-            <a href="https://github.com/Rumman05/Cosmic-Defender" target="_blank" class="project-link">
+            <a href="https://github.com/Rumman05/Cosmic-Defender" target="_blank" rel="noopener noreferrer" class="project-link">
               <i class="fab fa-github"></i>
               Source Code
             </a>
@@ -751,17 +731,14 @@
         </div>
 
         <div class="project-card">
-          <div class="project-image-container">
-            <img src="assets/childminder-pro.jpg" alt="ChildMinder Pro Project Screenshot" class="project-image">
-          </div>
-          <div class="project-content">
+          <div class="project-header">
             <div class="project-icon">
               <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring">
             </div>
             <h3>ChildMinder Pro</h3>
             <p>
-              A comprehensive full-stack application for monitoring and analyzing child behavior patterns. 
-              Features real-time data visualization, secure authentication, and responsive design 
+              A comprehensive full-stack application for monitoring and analyzing child behavior patterns.
+              Features real-time data visualization, secure authentication, and responsive design
               for cross-platform compatibility.
             </p>
             <div class="project-tech">
@@ -771,7 +748,7 @@
             </div>
           </div>
           <div class="project-links">
-            <a href="https://github.com/Rumman05/ChildMinder" target="_blank" class="project-link">
+            <a href="https://github.com/Rumman05/ChildMinder" target="_blank" rel="noopener noreferrer" class="project-link">
               <i class="fab fa-github"></i>
               Source Code
             </a>
@@ -779,17 +756,14 @@
         </div>
 
         <div class="project-card">
-          <div class="project-image-container">
-            <img src="assets/virtual-mouse.jpg" alt="Virtual Mouse Controller Project Screenshot" class="project-image">
-          </div>
-          <div class="project-content">
+          <div class="project-header">
             <div class="project-icon">
               <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
             </div>
             <h3>Virtual Mouse Controller</h3>
             <p>
-              An innovative computer vision application enabling hands-free navigation through gesture 
-              recognition. Utilizes advanced machine learning algorithms for precise hand tracking 
+              An innovative computer vision application enabling hands-free navigation through gesture
+              recognition. Utilizes advanced machine learning algorithms for precise hand tracking
               and seamless user interaction.
             </p>
             <div class="project-tech">
@@ -800,7 +774,7 @@
             </div>
           </div>
           <div class="project-links">
-            <a href="https://github.com/Rumman05/Hand-Tracking-Project" target="_blank" class="project-link">
+            <a href="https://github.com/Rumman05/Hand-Tracking-Project" target="_blank" rel="noopener noreferrer" class="project-link">
               <i class="fab fa-github"></i>
               Source Code
             </a>
@@ -808,17 +782,14 @@
         </div>
 
         <div class="project-card">
-          <div class="project-image-container">
-            <img src="assets/flashmind-ai.jpg" alt="FlashMind AI Project Screenshot" class="project-image">
-          </div>
-          <div class="project-content">
+          <div class="project-header">
             <div class="project-icon">
               <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React">
             </div>
             <h3>FlashMind AI</h3>
             <p>
-              An intelligent study assistant powered by OpenAI's API, featuring automated flashcard 
-              generation and adaptive quiz systems. Designed to enhance learning efficiency through 
+              An intelligent study assistant powered by Groq's API, featuring automated flashcard
+              generation and adaptive quiz systems. Designed to enhance learning efficiency through
               personalized educational content.
             </p>
             <div class="project-tech">
@@ -829,7 +800,7 @@
             </div>
           </div>
           <div class="project-links">
-            <a href="https://github.com/Rumman05/FlashMind-AI" target="_blank" class="project-link">
+            <a href="https://github.com/Rumman05/FlashMind-AI" target="_blank" rel="noopener noreferrer" class="project-link">
               <i class="fab fa-github"></i>
               Source Code
             </a>
@@ -849,21 +820,22 @@
       </div>
       <div class="contact-content">
         <div class="contact-info">
-          <div class="contact-item">
+          
+          <a href="mailto:Rummantemp2@gmail.com" class="contact-item">
             <i class="fas fa-envelope"></i>
             <h4>Email</h4>
-            <a href="mailto:Rummanlakhani2005@gmail.com">Rummanlakhani2005@gmail.com</a>
-          </div>
-          <div class="contact-item">
+          </a>
+          
+          <a href="https://github.com/Rumman05" target="_blank" rel="noopener noreferrer" class="contact-item">
             <i class="fab fa-github"></i>
             <h4>GitHub</h4>
-            <a href="https://github.com/Rumman05" target="_blank">github.com/Rumman05</a>
-          </div>
-          <div class="contact-item">
+          </a>
+          
+          <a href="https://www.linkedin.com/in/muhammad-rumman-lakhani/" target="_blank" rel="noopener noreferrer" class="contact-item">
             <i class="fab fa-linkedin"></i>
             <h4>LinkedIn</h4>
-            <a href="https://www.linkedin.com/in/muhammad-rumman-lakhani/" target="_blank">linkedin.com/in/muhammad-rumman-lakhani</a>
-          </div>
+          </a>
+
         </div>
       </div>
     </div>
@@ -871,7 +843,7 @@
 
   <footer>
     <div class="container">
-      <p>&copy; 2024 Muhammad Rumman. All Rights Reserved.</p>
+      <p>&copy; <span id="copyright-year">2025</span> Muhammad Rumman. All Rights Reserved.</p>
     </div>
   </footer>
 
@@ -915,7 +887,7 @@
             menuIcon.classList.add('fa-bars');
         }
       });
-      
+
       // Close mobile menu when a link is clicked
       document.querySelectorAll('.nav-links a').forEach(link => {
         link.addEventListener('click', () => {
@@ -947,6 +919,9 @@
       sections.forEach(section => {
         observer.observe(section);
       });
+
+      // Dynamically set copyright year
+      document.getElementById('copyright-year').textContent = new Date().getFullYear();
     });
   </script>
 </body>
