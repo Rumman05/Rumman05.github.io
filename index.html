@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Portfolio of Muhammad Rumman, a Computer Science student and Software Developer specializing in full-stack development, machine learning, and modern web technologies.">
+  <meta name="description" content="Portfolio of Muhammad Rumman, a Software Developer and Computer Science student specializing in full-stack development, machine learning, and modern web technologies.">
   <title>Muhammad Rumman | Software Developer</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
@@ -190,7 +190,17 @@
     .profile-section {
       display: flex;
       justify-content: center;
+      align-items: center;
       position: relative;
+      min-height: 400px;
+    }
+    #particle-plexus-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
     }
     .profile-pic {
       width: 300px;
@@ -200,6 +210,7 @@
       position: relative;
       background: #1a202c; /* Fallback background */
       padding: 4px;
+      z-index: 2; /* Sits on top of the canvas */
     }
     .profile-pic::before {
       content: '';
@@ -447,13 +458,13 @@
       border-radius: 12px;
       padding: 2rem 1.5rem;
       transition: all 0.3s ease;
-      text-decoration: none; /* UPDATED */
+      text-decoration: none;
     }
     .contact-item:hover {
       background: rgba(66, 153, 225, 0.08);
       transform: translateY(-4px);
     }
-    .contact-item:hover h4 { /* ADDED */
+    .contact-item:hover h4 {
       color: #4299e1;
     }
     .contact-item i {
@@ -463,9 +474,9 @@
     }
     .contact-item h4 {
       color: #ffffff;
-      margin-bottom: 0; /* UPDATED */
+      margin-bottom: 0;
       font-weight: 600;
-      transition: color 0.3s ease; /* ADDED */
+      transition: color 0.3s ease;
     }
 
     /* FOOTER */
@@ -592,6 +603,7 @@
           </div>
         </div>
         <div class="profile-section">
+          <canvas id="particle-plexus-canvas"></canvas>
           <div class="profile-pic">
             <img src="Profile.jpg" alt="Headshot of Muhammad Rumman">
           </div>
@@ -820,17 +832,17 @@
       </div>
       <div class="contact-content">
         <div class="contact-info">
-          
-          <a href="mailto:Rummantemp2@gmail.com" class="contact-item">
+
+          <a href="mailto:Rummanlakhani2005@gmail.com" class="contact-item">
             <i class="fas fa-envelope"></i>
             <h4>Email</h4>
           </a>
-          
+
           <a href="https://github.com/Rumman05" target="_blank" rel="noopener noreferrer" class="contact-item">
             <i class="fab fa-github"></i>
             <h4>GitHub</h4>
           </a>
-          
+
           <a href="https://www.linkedin.com/in/muhammad-rumman-lakhani/" target="_blank" rel="noopener noreferrer" class="contact-item">
             <i class="fab fa-linkedin"></i>
             <h4>LinkedIn</h4>
@@ -922,6 +934,115 @@
 
       // Dynamically set copyright year
       document.getElementById('copyright-year').textContent = new Date().getFullYear();
+
+      // === NEW PARTICLE PLEXUS ANIMATION SCRIPT ===
+      const canvas = document.getElementById('particle-plexus-canvas');
+      const ctx = canvas.getContext('2d');
+      let particlesArray;
+
+      // Get the parent container dimensions
+      const container = canvas.parentElement;
+      canvas.width = container.offsetWidth;
+      canvas.height = container.offsetHeight;
+
+      let mouse = {
+        x: null,
+        y: null,
+        radius: (canvas.height/110) * (canvas.width/110)
+      }
+
+      window.addEventListener('mousemove', function(event) {
+        let rect = canvas.getBoundingClientRect();
+        mouse.x = event.clientX - rect.left;
+        mouse.y = event.clientY - rect.top;
+      });
+
+      window.addEventListener('mouseout', function(){
+        mouse.x = undefined;
+        mouse.y = undefined;
+      });
+
+      class Particle {
+        constructor(x, y, directionX, directionY, size, color) {
+          this.x = x;
+          this.y = y;
+          this.directionX = directionX;
+          this.directionY = directionY;
+          this.size = size;
+          this.color = color;
+        }
+        draw() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+          ctx.fillStyle = 'rgba(66, 153, 225, 0.5)';
+          ctx.fill();
+        }
+        update() {
+          if(this.x > canvas.width || this.x < 0) {
+            this.directionX = -this.directionX;
+          }
+          if(this.y > canvas.height || this.y < 0) {
+            this.directionY = -this.directionY;
+          }
+          this.x += this.directionX;
+          this.y += this.directionY;
+          this.draw();
+        }
+      }
+
+      function init() {
+        particlesArray = [];
+        let numberOfParticles = (canvas.height * canvas.width) / 9000;
+        for (let i = 0; i < numberOfParticles; i++) {
+          let size = (Math.random() * 2) + 1;
+          let x = (Math.random() * ((canvas.width - size * 2) - (size * 2)) + size * 2);
+          let y = (Math.random() * ((canvas.height - size * 2) - (size * 2)) + size * 2);
+          let directionX = (Math.random() * 0.4) - 0.2;
+          let directionY = (Math.random() * 0.4) - 0.2;
+          let color = 'rgba(66, 153, 225, 0.5)';
+          particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+        }
+      }
+
+      function connect() {
+        let opacityValue = 1;
+        for (let a = 0; a < particlesArray.length; a++) {
+          for (let b = a; b < particlesArray.length; b++) {
+            let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x))
+            + ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+
+            if (distance < (canvas.width/7) * (canvas.height/7)) {
+              opacityValue = 1 - (distance/20000);
+              ctx.strokeStyle = `rgba(102, 126, 234, ${opacityValue})`;
+              ctx.lineWidth = 1;
+              ctx.beginPath();
+              ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+              ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+              ctx.stroke();
+            }
+          }
+        }
+      }
+
+      function animate() {
+        requestAnimationFrame(animate);
+        ctx.clearRect(0,0,canvas.width, canvas.height);
+        for (let i = 0; i < particlesArray.length; i++) {
+          particlesArray[i].update();
+        }
+        connect();
+      }
+
+      window.addEventListener('resize', function(){
+        canvas.width = container.offsetWidth;
+        canvas.height = container.offsetHeight;
+        mouse.radius = (canvas.height/110) * (canvas.width/110);
+        init();
+      });
+
+      init();
+      animate();
+
     });
   </script>
 </body>
