@@ -22,4 +22,4 @@ You can view the live portfolio here:
 ## Contact
 
 - **Email**: your.email@example.com
-- **GitHub**: [github.com/Rumman-5](https://github.com/Rumman-5)
+- **GitHub**: [github.com/Rumman05](https://github.com/Rumman05)
