@@ -1,6 +1,6 @@
 # My Personal Portfolio
 
-Welcome to my personal portfolio! This page showcases my skills and projects as a web developer.
+Welcome to my personal portfolio! This page showcases my skills and projects as a software developer and aspiring cyber security specialist.
 
 ## Tech Stack
 
@@ -8,11 +8,6 @@ Welcome to my personal portfolio! This page showcases my skills and projects as 
 - **CSS3**
 - **JavaScript**
 - **GitHub Pages** (for deployment)
-
-## Features
-
-- Responsive design
-- Displays a selection of my projects
 
 ## Live Demo
 
