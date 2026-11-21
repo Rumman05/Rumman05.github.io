@@ -21,5 +21,5 @@ You can view the live portfolio here:
 
 ## Contact
 
-- **Email**: your.email@example.com
+- **Email**: rummanlakhani2005@gmail.com
 - **GitHub**: [github.com/Rumman05](https://github.com/Rumman05)
