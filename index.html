@@ -1,1153 +1,1565 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark scroll-smooth">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Portfolio of Muhammad Rumman Umed, a Software Developer specializing in full-stack development, cyber security, and game programming.">
-  <title>Muhammad Rumman Umed | Software Developer & Security Enthusiast</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portfolio of Muhammad Rumman Umed, MSc Information Security student at UCL and software developer." />
+  <title>Muhammad Rumman Umed | Information Security & Software Development</title>
+
+  <!-- Google Fonts: Space Grotesk, Inter, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Space Grotesk', 'Inter', 'sans-serif'],
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+          },
+          colors: {
+            obsidian: '#09090b',
+            paper: '#f5f4ef',
+            ink: '#111111',
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Prevent theme flash: default to dark unless user saved light -->
+  <script>
+    (function () {
+      try {
+        const stored = localStorage.getItem('rumman-theme');
+        if (stored === 'light') {
+          document.documentElement.classList.remove('dark');
+        } else {
+          document.documentElement.classList.add('dark');
+        }
+      } catch (e) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+
   <style>
-    /* RESET & BASE */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Inter', sans-serif;
-      line-height: 1.6;
-      color: #4b5563; /* Dark gray for high readability */
-      background: #f8fafc; /* Very soft cool gray/white */
-      min-height: 100vh;
+    /* Subtle dot-grid background texture for cyber-editorial aesthetic */
+    .bg-dot-grid {
+      background-image: radial-gradient(rgba(161, 161, 170, 0.22) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .dark .bg-dot-grid {
+      background-image: radial-gradient(rgba(113, 113, 122, 0.22) 1px, transparent 1px);
+      background-size: 24px 24px;
     }
 
-    /* CUSTOM SCROLLBAR */
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #f1f5f9; }
-    ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #64748b; }
-
-    /* CONTAINERS */
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-
-    /* FLOATING PARTICLES (Subdued for corporate look) */
-    .particles {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
-    }
-    .particle {
-      position: absolute;
-      width: 3px;
-      height: 3px;
-      background: #2563eb; /* Corporate Blue */
-      border-radius: 50%;
-      animation: float 10s infinite ease-in-out;
-      opacity: 0.15;
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0) translateX(0); opacity: 0.1; }
-      50% { transform: translateY(-100vh) translateX(50px); opacity: 0.3; }
-    }
-
-    /* NAVBAR */
-    .navbar {
-      position: fixed; top: 0; width: 100%;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid #e2e8f0;
-      z-index: 1000;
-      transition: all 0.3s ease;
-    }
-    .navbar.scrolled {
-      background: rgba(255, 255, 255, 0.98);
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-    }
-    .navbar .container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.25rem 0;
-    }
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #0f172a;
-      text-decoration: none;
-      letter-spacing: -0.5px;
-    }
-    .nav-links {
-      list-style: none;
-      display: flex;
-      gap: 2rem;
-    }
-    .nav-links a {
-      text-decoration: none;
-      color: #64748b;
-      padding: 0.5rem 0;
-      transition: color 0.3s ease;
-      font-weight: 500;
+    /* Cursor spotlight card effect */
+    .spotlight-card {
       position: relative;
+      overflow: hidden;
     }
-    .nav-links a::after {
+    .spotlight-card::before {
       content: '';
       position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: #2563eb;
-      transition: width 0.3s ease;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      background: radial-gradient(
+        420px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(16, 185, 129, 0.11),
+        transparent 55%
+      );
+      z-index: 0;
     }
-    .nav-links a:hover,
-    .nav-links a.active {
-      color: #0f172a;
+    .dark .spotlight-card::before {
+      background: radial-gradient(
+        420px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(16, 185, 129, 0.14),
+        rgba(56, 189, 248, 0.05) 35%,
+        transparent 60%
+      );
     }
-    .nav-links a:hover::after,
-    .nav-links a.active::after {
-      width: 100%;
+    .spotlight-card:hover::before {
+      opacity: 1;
+    }
+    .spotlight-card > * {
+      position: relative;
+      z-index: 1;
     }
 
-    /* HERO */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      position: relative;
-      z-index: 2;
-      padding-top: 6rem;
+    /* Subtle terminal scrollbar */
+    .term-scroll::-webkit-scrollbar {
+      width: 5px;
     }
-    .hero-content {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
-      width: 100%;
-    }
-    .hero-text h1 {
-      font-size: clamp(2.5rem, 5vw, 3.5rem);
-      font-weight: 800;
-      color: #0f172a;
-      margin-bottom: 1rem;
-      line-height: 1.2;
-      letter-spacing: -1px;
-    }
-    .hero-text .subtitle {
-      font-size: 1.25rem;
-      color: #2563eb;
-      margin-bottom: 1.5rem;
-      font-weight: 600;
-    }
-    .hero-text .description {
-      font-size: 1.1rem;
-      color: #475569;
-      margin-bottom: 2.5rem;
-      line-height: 1.7;
-    }
-    .cta-buttons {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1.5rem;
-      border-radius: 8px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.2s ease;
-      font-size: 1rem;
-    }
-    .btn-primary {
-      background: #2563eb;
-      color: #ffffff;
-      border: 2px solid #2563eb;
-    }
-    .btn-primary:hover {
-      background: #1d4ed8;
-      border-color: #1d4ed8;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
-    }
-    .btn-secondary {
+    .term-scroll::-webkit-scrollbar-track {
       background: transparent;
-      color: #0f172a;
-      border: 2px solid #cbd5e1;
     }
-    .btn-secondary:hover {
-      border-color: #0f172a;
-      transform: translateY(-2px);
+    .term-scroll::-webkit-scrollbar-thumb {
+      background: #3f3f46;
+      border-radius: 9999px;
     }
 
-    /* PROFILE PICTURE SECTION */
-    .profile-section {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      min-height: 400px;
-      width: 100%;
-    }
-    #particle-plexus-canvas {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1;
-        opacity: 0.4; /* Subdued for light theme */
-    }
-    .profile-pic {
-      width: 300px;
-      height: 300px;
-      border-radius: 50%; /* Changed to circle for a more traditional corporate look */
-      overflow: hidden;
-      position: relative;
-      background: #ffffff;
-      padding: 8px;
-      z-index: 2;
-      margin: 0 auto;
-      display: block;
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    }
-    .profile-pic img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
-    }
-
-    /* SECTIONS */
-    .section {
-      padding: 6rem 0;
-      position: relative;
-      z-index: 2;
-    }
-    .section:nth-child(even) {
-      background: #ffffff; /* Alternating background colors for sections */
-      border-top: 1px solid #f1f5f9;
-      border-bottom: 1px solid #f1f5f9;
-    }
-    .section-header {
-      text-align: center;
-      margin-bottom: 4rem;
-    }
-    .section-title {
-      font-size: 2.25rem;
-      font-weight: 700;
-      color: #0f172a;
-      margin-bottom: 1rem;
-      letter-spacing: -0.5px;
-    }
-    .section-subtitle {
-      font-size: 1.1rem;
-      color: #64748b;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    /* ABOUT */
-    .about-content {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 4rem;
-      align-items: start;
-    }
-    .about-stats {
-      display: grid;
-      gap: 1.5rem;
-    }
-    .stat-card {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 1.5rem;
-      text-align: center;
-      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-    }
-    .stat-number {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: #2563eb;
-    }
-    .stat-label {
-      color: #64748b;
-      font-size: 0.9rem;
-      margin-top: 0.25rem;
-      font-weight: 500;
-    }
-    .about-text {
-      font-size: 1.1rem;
-      line-height: 1.8;
-      color: #475569;
-    }
-    .about-text p {
-      margin-bottom: 1.5rem;
-    }
-
-    /* EXPERIENCE */
-    .experience-grid {
-      display: grid;
-      gap: 2rem;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    .exp-card {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-left: 4px solid #2563eb;
-      border-radius: 8px;
-      padding: 2rem;
-      transition: box-shadow 0.3s ease;
-      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-    }
-    .exp-card:hover {
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    }
-    .exp-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 1rem;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    .exp-title h3 {
-      font-size: 1.25rem;
-      color: #0f172a;
-      font-weight: 700;
-    }
-    .exp-title h4 {
-      font-size: 1rem;
-      color: #2563eb;
-      font-weight: 500;
-      margin-top: 0.25rem;
-    }
-    .exp-date {
-      color: #64748b;
-      font-size: 0.9rem;
-      font-weight: 500;
-      background: #f1f5f9;
-      padding: 0.25rem 0.75rem;
-      border-radius: 4px;
-    }
-    .exp-details {
-      list-style-type: none;
-    }
-    .exp-details li {
-      margin-bottom: 0.75rem;
-      color: #475569;
-      position: relative;
-      padding-left: 1.25rem;
-      font-size: 0.95rem;
-    }
-    .exp-details li::before {
-      content: '•';
-      position: absolute;
-      left: 0;
-      color: #2563eb;
-      font-weight: bold;
-    }
-
-    /* SKILLS */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
-    }
-    .skill-category {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 2rem;
-      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-    }
-    .skill-category h3 {
-      color: #0f172a;
-      font-size: 1.1rem;
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-weight: 600;
-    }
-    .skill-category h3 i {
-      color: #2563eb;
-    }
-    .skill-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-    .skill-tag {
-      background: #f1f5f9;
-      color: #475569;
-      padding: 0.4rem 0.8rem;
-      border-radius: 6px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      border: 1px solid #e2e8f0;
-    }
-
-    /* PROJECTS */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2rem;
-    }
-    .project-card {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      overflow: hidden;
-      transition: all 0.3s ease;
-      display: flex;
-      flex-direction: column;
-    }
-    .project-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
-    }
-    .project-header {
-      padding: 2rem 2rem 1.5rem;
-      flex-grow: 1;
-    }
-    .project-icon {
-      width: 48px;
-      height: 48px;
-      background: #eff6ff;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1.5rem;
-      font-size: 1.5rem;
-      color: #2563eb;
-    }
-    .project-card h3 {
-      color: #0f172a;
-      font-size: 1.25rem;
-      margin-bottom: 0.75rem;
-      font-weight: 700;
-    }
-    .project-card p {
-      color: #475569;
-      line-height: 1.6;
-      font-size: 0.95rem;
-      margin-bottom: 1.5rem;
-    }
-    .project-tech {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1.5rem;
-    }
-    .tech-tag {
-      background: #f8fafc;
-      color: #2563eb;
-      padding: 0.25rem 0.6rem;
-      border-radius: 4px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      border: 1px solid #bfdbfe;
-    }
-    .project-links {
-      padding: 1.5rem 2rem;
-      background: #f8fafc;
-      border-top: 1px solid #e2e8f0;
-      display: flex;
-      gap: 1rem;
-    }
-    .project-link {
-      color: #0f172a;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: color 0.2s ease;
-    }
-    .project-link:hover {
-      color: #2563eb;
-    }
-
-    /* CONTACT */
-    .contact-content {
-      max-width: 800px;
-      margin: 0 auto;
-      text-align: center;
-    }
-    .contact-info {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.5rem;
-      margin-top: 3rem;
-    }
-    .contact-item {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
-      padding: 2rem 1.5rem;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-    }
-    .contact-item:hover {
-      border-color: #2563eb;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.1);
-    }
-    .contact-item i {
-      font-size: 1.75rem;
-      color: #2563eb;
-      margin-bottom: 1rem;
-    }
-    .contact-item h4 {
-      color: #0f172a;
-      font-weight: 600;
-    }
-
-    /* FOOTER */
-    footer {
-      background: #ffffff;
-      border-top: 1px solid #e2e8f0;
-      text-align: center;
-      padding: 2rem 0;
-      color: #64748b;
-      position: relative;
-      z-index: 2;
-      font-size: 0.9rem;
-    }
-
-    /* MOBILE MENU */
-    .menu-toggle {
-      display: none;
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      color: #0f172a;
-      cursor: pointer;
-      z-index: 1001;
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 768px) {
-      .container { padding: 0 1.5rem; }
-
-      .nav-links {
+    /* Reduced motion override */
+    @media (prefers-reduced-motion: reduce) {
+      .animate-ping,
+      .animate-pulse {
+        animation: none !important;
+      }
+      .spotlight-card::before {
         display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: #ffffff;
-        flex-direction: column;
-        padding: 1.5rem;
-        border-top: 1px solid #e2e8f0;
-        border-bottom: 1px solid #e2e8f0;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
       }
-      .nav-links.open { display: flex; }
-      .menu-toggle { display: block; }
-
-      .hero-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-        gap: 3rem;
-      }
-      .hero-text { order: 2; }
-      .profile-section { order: 1; min-height: 300px; }
-      
-      .cta-buttons { justify-content: center; }
-      .about-content { grid-template-columns: 1fr; gap: 2rem; }
     }
   </style>
 </head>
-<body>
-  <div class="particles" id="particles"></div>
+<body class="bg-[#f5f4ef] text-[#111111] dark:bg-[#09090b] dark:text-[#fafafa] font-sans antialiased bg-dot-grid selection:bg-emerald-500/20 selection:text-emerald-700 dark:selection:text-emerald-300 overflow-x-hidden">
 
-  <nav class="navbar" id="navbar">
-    <div class="container">
-      <a href="#home" class="logo">Muhammad Rumman</a>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#home" class="active">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-      <button class="menu-toggle" id="menuToggle">
-        <i class="fas fa-bars"></i>
-      </button>
-    </div>
-  </nav>
+  <!-- Sticky Glassmorphic Navbar -->
+  <header class="sticky top-0 z-40 w-full border-b border-zinc-300/80 dark:border-zinc-800/90 bg-[#f5f4ef]/85 dark:bg-[#09090b]/85 backdrop-blur-md">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+      <!-- Brand -->
+      <a href="#top" class="flex items-center gap-2.5 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500">
+        <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-zinc-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 font-mono text-xs font-semibold text-emerald-700 dark:text-emerald-400 shadow-sm">
+          &gt;_
+        </span>
+        <span class="font-mono text-sm font-semibold tracking-tight">rumman.dev</span>
+      </a>
 
-  <section id="home" class="hero">
-    <div class="container">
-      <div class="hero-content">
-        <div class="hero-text">
-          <h1>Software Developer & Cyber Security Enthusiast</h1>
-          <p class="subtitle">Final-Year Computer Science Student at University of Essex</p>
-          <p class="description">
-            Passionate about engineering robust, secure software solutions and exploring immersive game development. 
-            Blending full-stack proficiency with enterprise cyber security operations to build applications that are as safe as they are scalable.
-          </p>
-          <div class="cta-buttons">
-            <a href="#projects" class="btn btn-primary">
-              <i class="fas fa-code"></i>
-              View My Work
-            </a>
-            <a href="#contact" class="btn btn-secondary">
-              <i class="fas fa-envelope"></i>
-              Get In Touch
-            </a>
-          </div>
-        </div>
-        <div class="profile-section">
-          <canvas id="particle-plexus-canvas"></canvas>
-          <div class="profile-pic">
-            <img src="Profile.jpg" alt="Headshot of Muhammad Rumman">
-          </div>
-        </div>
+      <!-- Desktop Navigation -->
+      <nav aria-label="Primary" class="hidden md:flex items-center gap-1">
+        <a href="#experience" class="px-3 py-1.5 text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-50 rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500">Experience</a>
+        <a href="#projects" class="px-3 py-1.5 text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-50 rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500">Projects</a>
+        <a href="#education" class="px-3 py-1.5 text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-50 rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500">Education</a>
+        <a href="#skills" class="px-3 py-1.5 text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-50 rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500">Skills</a>
+        <a href="#contact" class="px-3 py-1.5 text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-50 rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500">Contact</a>
+      </nav>
+
+      <!-- Right Controls: Cmd+K, Theme Toggle, Mobile Drawer -->
+      <div class="flex items-center gap-2">
+        <button
+          id="open-cmd-btn"
+          type="button"
+          aria-label="Open command palette"
+          class="inline-flex items-center gap-2 h-9 px-3 rounded-lg border border-zinc-300 dark:border-zinc-800 bg-white/90 dark:bg-zinc-900/90 text-xs font-mono text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100 hover:border-zinc-400 dark:hover:border-zinc-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+        >
+          <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" />
+          </svg>
+          <span class="hidden sm:inline">Search</span>
+          <kbd class="px-1.5 py-0.5 text-[10px] rounded border border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-950 text-zinc-700 dark:text-zinc-300">Cmd K</kbd>
+        </button>
+
+        <button
+          id="theme-toggle"
+          type="button"
+          aria-label="Toggle color theme"
+          class="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-300 dark:border-zinc-800 bg-white/90 dark:bg-zinc-900/90 text-zinc-700 dark:text-zinc-300 hover:border-zinc-400 dark:hover:border-zinc-700 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+        >
+          <svg class="hidden dark:block h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path stroke-linecap="round" d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+          </svg>
+          <svg class="block dark:hidden h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79Z" />
+          </svg>
+        </button>
+
+        <button
+          id="mobile-menu-btn"
+          type="button"
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          class="md:hidden inline-flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-300 dark:border-zinc-800 bg-white/90 dark:bg-zinc-900/90 text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+        >
+          <svg id="menu-open-icon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg id="menu-close-icon" class="hidden h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+          </svg>
+        </button>
       </div>
     </div>
-  </section>
 
-  <section id="about" class="section">
-    <div class="container">
-      <div class="section-header">
-        <h2 class="section-title">About Me</h2>
-        <p class="section-subtitle">
-          Dedicated to continuous learning, robust system defense, and building impactful software solutions
-        </p>
-      </div>
-      <div class="about-content">
-        <div class="about-stats">
-          <div class="stat-card">
-            <div class="stat-number">Final</div>
-            <div class="stat-label">Year Student</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">1st</div>
-            <div class="stat-label">Predicted Class</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">10+</div>
-            <div class="stat-label">Technologies</div>
-          </div>
-        </div>
-        <div class="about-text">
-          <p>
-            I'm a final-year Computer Science undergraduate at the University of Essex with a deep-seated passion for
-            transforming complex challenges into elegant, secure solutions. My expertise spans across
-            multiple programming languages and frameworks, with particular strength in Python, Java, C#,
-            and modern web technologies.
-          </p>
-          <p>
-            Recently, I've expanded my focus into <strong>Cyber Security</strong> and <strong>Game Development</strong>. 
-            I have hands-on experience mitigating network vulnerabilities, running organization-wide phishing simulations, 
-            and architecting immersive 3D environments using the Unity engine. 
-          </p>
-          <p>
-            My approach combines technical proficiency with creative problem-solving, always focusing on writing clean code, 
-            securing network infrastructure, and following agile industry best practices.
-          </p>
-        </div>
-      </div>
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-zinc-300 dark:border-zinc-800 bg-[#f5f4ef] dark:bg-[#09090b]">
+      <nav aria-label="Mobile" class="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-1">
+        <a href="#experience" class="mobile-nav-link px-3 py-2.5 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200/70 dark:hover:bg-zinc-900 rounded-lg">Experience</a>
+        <a href="#projects" class="mobile-nav-link px-3 py-2.5 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200/70 dark:hover:bg-zinc-900 rounded-lg">Projects</a>
+        <a href="#education" class="mobile-nav-link px-3 py-2.5 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200/70 dark:hover:bg-zinc-900 rounded-lg">Education</a>
+        <a href="#skills" class="mobile-nav-link px-3 py-2.5 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200/70 dark:hover:bg-zinc-900 rounded-lg">Skills</a>
+        <a href="#contact" class="mobile-nav-link px-3 py-2.5 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200/70 dark:hover:bg-zinc-900 rounded-lg">Contact</a>
+      </nav>
     </div>
-  </section>
+  </header>
 
-  <section id="experience" class="section">
-    <div class="container">
-      <div class="section-header">
-        <h2 class="section-title">Professional Experience</h2>
-        <p class="section-subtitle">
-          Real-world application of software engineering and enterprise security
-        </p>
-      </div>
-      <div class="experience-grid">
+  <!-- Hero Section with Interactive Canvas Backdrop -->
+  <section id="top" class="relative border-b border-zinc-300/80 dark:border-zinc-800/90 overflow-hidden">
+    <!-- Responsive Interactive Network Canvas -->
+    <canvas id="hero-canvas" class="absolute inset-0 w-full h-full pointer-events-none opacity-65 dark:opacity-75" aria-hidden="true"></canvas>
 
-        <div class="exp-card">
-          <div class="exp-header">
-            <div class="exp-title">
-              <h3>Nakilat</h3>
-              <h4>IT Intern | Doha, Qatar</h4>
+    <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
+      <!-- Asymmetric Hero Bento Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+
+        <!-- Main Intro Card (8 cols) -->
+        <div class="spotlight-card lg:col-span-8 rounded-2xl border border-zinc-300 dark:border-zinc-800 bg-white/85 dark:bg-zinc-950/85 backdrop-blur-md p-6 sm:p-8 flex flex-col justify-between gap-6">
+          <div class="space-y-5">
+            <!-- Status Bar & Live London Clock -->
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div class="inline-flex items-center gap-2 rounded-full border border-emerald-600/30 dark:border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-mono text-emerald-800 dark:text-emerald-300">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-600 dark:bg-emerald-400"></span>
+                </span>
+                <span>MSc Information Security at UCL · London, UK</span>
+              </div>
+
+              <div class="inline-flex items-center gap-2 rounded-lg border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900/90 px-2.5 py-1 font-mono text-xs text-zinc-600 dark:text-zinc-400">
+                <span class="text-sky-600 dark:text-sky-400">LON</span>
+                <span id="london-clock" aria-live="off">--:--:--</span>
+              </div>
             </div>
-            <span class="exp-date">Aug 2025 – Sept 2025</span>
+
+            <!-- Display Headline & Lead Copy -->
+            <div class="space-y-3">
+              <h1 class="font-display text-3xl sm:text-5xl font-bold tracking-tight text-[#111111] dark:text-[#fafafa] leading-[1.08]">
+                Muhammad Rumman Umed
+              </h1>
+              <p class="text-base sm:text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-2xl">
+                Information security postgraduate and software developer. I build security tools, full-stack web apps, and the occasional game in Unity.
+              </p>
+            </div>
           </div>
-          <ul class="exp-details">
-            <li>Developed a fully functional AI chatbot that allows employees to search for open job requisitions and apply for leave efficiently.</li>
-            <li>Integrated the chatbot with the company's internal SAP API, which was manually configured and tested using Postman.</li>
-            <li>Built the full-stack solution using React (Frontend) and Flask (Backend) to ensure enterprise-level performance.</li>
+
+          <!-- Action Row -->
+          <div class="flex flex-wrap items-center gap-3 pt-2">
+            <a
+              href="#projects"
+              class="inline-flex items-center justify-center gap-2 h-10 px-4 rounded-lg bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-zinc-950"
+            >
+              <span>View projects</span>
+              <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+
+            <button
+              type="button"
+              data-copy-email
+              class="inline-flex items-center justify-center gap-2 h-10 px-4 rounded-lg border border-zinc-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-sm font-medium text-zinc-900 dark:text-zinc-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+            >
+              <svg class="h-4 w-4 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2m-6 12h8a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-8a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2Z" />
+              </svg>
+              <span>Copy email</span>
+            </button>
+
+            <div class="flex items-center gap-2 sm:ml-auto">
+              <a
+                href="https://github.com/Rumman05"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub profile"
+                class="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 hover:border-emerald-500/50 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+              >
+                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z" />
+                </svg>
+              </a>
+              <a
+                href="https://www.linkedin.com/in/muhammad-rumman-umed/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn profile"
+                class="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 hover:border-sky-500/50 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+              >
+                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77Z" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile Photo Card (4 cols) -->
+        <div class="spotlight-card lg:col-span-4 rounded-2xl border border-zinc-300 dark:border-zinc-800 bg-white/85 dark:bg-zinc-950/85 backdrop-blur-md p-4 flex flex-col justify-between gap-3">
+          <div class="relative w-full aspect-[4/3] lg:aspect-square rounded-xl overflow-hidden border border-zinc-300 dark:border-zinc-800 bg-zinc-200/70 dark:bg-zinc-900">
+            <img
+              src="Profile.jpg"
+              alt="Muhammad Rumman Umed"
+              class="w-full h-full object-cover"
+              onerror="this.classList.add('hidden'); this.nextElementSibling.classList.remove('hidden');"
+            />
+            <!-- Clean stylized monospace fallback -->
+            <div class="hidden w-full h-full flex flex-col items-center justify-center p-6 text-center bg-gradient-to-br from-zinc-900 via-zinc-950 to-zinc-900 text-zinc-100 select-none">
+              <div class="font-mono text-xs text-emerald-400 tracking-widest uppercase mb-2">ID // 0xMRU</div>
+              <div class="font-display text-5xl font-bold tracking-tighter text-white">MRU</div>
+              <div class="mt-3 flex items-center gap-2 font-mono text-[11px] text-zinc-400">
+                <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+                <span>INFOSEC / DEV</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center justify-between px-1 font-mono text-[11px] text-zinc-500 dark:text-zinc-400">
+            <span>rummanlakhani2005@gmail.com</span>
+            <span class="text-emerald-700 dark:text-emerald-400">UCL '27</span>
+          </div>
+        </div>
+
+        <!-- Interactive Mini-Terminal Card (7 cols) -->
+        <div class="spotlight-card lg:col-span-7 rounded-2xl border border-zinc-300 dark:border-zinc-800 bg-zinc-950 text-zinc-100 p-4 sm:p-5 flex flex-col justify-between gap-3 shadow-sm">
+          <!-- Terminal Header -->
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-zinc-800">
+            <div class="flex items-center gap-2">
+              <span class="h-2.5 w-2.5 rounded-full bg-zinc-700"></span>
+              <span class="h-2.5 w-2.5 rounded-full bg-zinc-700"></span>
+              <span class="h-2.5 w-2.5 rounded-full bg-emerald-500/80"></span>
+              <span class="ml-1.5 font-mono text-xs text-zinc-400">rumman@ucl:~</span>
+            </div>
+            <!-- Clickable Preset Command Chips -->
+            <div class="flex flex-wrap items-center gap-1.5">
+              <button type="button" data-term-cmd="whoami" class="term-chip px-2 py-0.5 rounded border border-zinc-800 bg-zinc-900 hover:border-emerald-500/60 hover:text-emerald-400 font-mono text-[11px] text-zinc-300 transition-colors">whoami</button>
+              <button type="button" data-term-cmd="certs" class="term-chip px-2 py-0.5 rounded border border-zinc-800 bg-zinc-900 hover:border-emerald-500/60 hover:text-emerald-400 font-mono text-[11px] text-zinc-300 transition-colors">certs</button>
+              <button type="button" data-term-cmd="stack" class="term-chip px-2 py-0.5 rounded border border-zinc-800 bg-zinc-900 hover:border-emerald-500/60 hover:text-emerald-400 font-mono text-[11px] text-zinc-300 transition-colors">stack</button>
+              <button type="button" data-term-cmd="focus" class="term-chip px-2 py-0.5 rounded border border-zinc-800 bg-zinc-900 hover:border-emerald-500/60 hover:text-emerald-400 font-mono text-[11px] text-zinc-300 transition-colors">focus</button>
+              <button type="button" data-term-cmd="contact" class="term-chip px-2 py-0.5 rounded border border-zinc-800 bg-zinc-900 hover:border-emerald-500/60 hover:text-emerald-400 font-mono text-[11px] text-zinc-300 transition-colors">contact</button>
+            </div>
+          </div>
+
+          <!-- Terminal Output Area -->
+          <div id="term-output" class="term-scroll h-32 overflow-y-auto font-mono text-xs space-y-2 pr-1 text-zinc-300" aria-live="polite">
+            <div>
+              <span class="text-emerald-400">$</span> <span class="text-zinc-100">whoami</span>
+              <p class="mt-0.5 text-zinc-400">Muhammad Rumman Umed. MSc Information Security student at UCL (NCSC-certified). BSc CS First Class Honours from University of Essex.</p>
+            </div>
+          </div>
+
+          <!-- Terminal Input Form -->
+          <form id="term-form" class="flex items-center gap-2 pt-2 border-t border-zinc-800/90">
+            <label for="term-input" class="font-mono text-xs text-emerald-400 select-none">$</label>
+            <input
+              id="term-input"
+              type="text"
+              autocomplete="off"
+              spellcheck="false"
+              placeholder="Type whoami, certs, stack, focus, contact, or clear..."
+              class="w-full bg-transparent font-mono text-xs text-zinc-100 placeholder:text-zinc-500 focus:outline-none"
+            />
+          </form>
+        </div>
+
+        <!-- Quick Stats Bento Strip (5 cols, 2x2 grid) -->
+        <div class="lg:col-span-5 grid grid-cols-2 gap-4">
+          <div class="spotlight-card rounded-2xl border border-zinc-300 dark:border-zinc-800 bg-white/85 dark:bg-zinc-950/85 backdrop-blur-md p-4 flex flex-col justify-between">
+            <span class="font-mono text-[11px] text-zinc-500 dark:text-zinc-400">2026 to 2027</span>
+            <div class="mt-3">
+              <div class="font-display text-xl font-bold text-[#111111] dark:text-[#fafafa]">UCL MSc</div>
+              <p class="mt-0.5 text-xs text-zinc-600 dark:text-zinc-400">NCSC-Certified InfoSec</p>
+            </div>
+          </div>
+
+          <div class="spotlight-card rounded-2xl border border-zinc-300 dark:border-zinc-800 bg-white/85 dark:bg-zinc-950/85 backdrop-blur-md p-4 flex flex-col justify-between">
+            <span class="font-mono text-[11px] text-zinc-500 dark:text-zinc-400">80%+ Dissertation</span>
+            <div class="mt-3">
+              <div class="font-display text-xl font-bold text-[#111111] dark:text-[#fafafa]">First Class</div>
+              <p class="mt-0.5 text-xs text-zinc-600 dark:text-zinc-400">BSc CS, Univ. of Essex</p>
+            </div>
+          </div>
+
+          <div class="spotlight-card rounded-2xl border border-zinc-300 dark:border-zinc-800 bg-white/85 dark:bg-zinc-950/85 backdrop-blur-md p-4 flex flex-col justify-between">
+            <span class="font-mono text-[11px] text-emerald-700 dark:text-emerald-400">SY0-701 & CCNAv7</span>
+            <div class="mt-3">
+              <div class="font-display text-xl font-bold text-[#111111] dark:text-[#fafafa]">Security+</div>
+              <p class="mt-0.5 text-xs text-zinc-600 dark:text-zinc-400">CompTIA & Cisco certified</p>
+            </div>
+          </div>
+
+          <div class="spotlight-card rounded-2xl border border-zinc-300 dark:border-zinc-800 bg-white/85 dark:bg-zinc-950/85 backdrop-blur-md p-4 flex flex-col justify-between">
+            <span class="font-mono text-[11px] text-sky-700 dark:text-sky-400">QChem & Nakilat</span>
+            <div class="mt-3">
+              <div class="font-display text-xl font-bold text-[#111111] dark:text-[#fafafa]">3 Internships</div>
+              <p class="mt-0.5 text-xs text-zinc-600 dark:text-zinc-400">IT and Cyber Security</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Container -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6">
+
+    <!-- Experience Section: 3 Distinct, Separated Entries -->
+    <section id="experience" class="py-16 sm:py-20 border-b border-zinc-300/80 dark:border-zinc-800/90">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 mb-10">
+        <div>
+          <span class="font-mono text-xs text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">01 / Work history</span>
+          <h2 class="mt-1 font-display text-2xl sm:text-3xl font-bold tracking-tight">Experience</h2>
+        </div>
+        <span class="font-mono text-xs text-zinc-500 dark:text-zinc-400">3 internships · Doha, Qatar</span>
+      </div>
+
+      <div class="space-y-5">
+
+        <!-- Entry 1: QChem -->
+        <article class="spotlight-card rounded-2xl border border-zinc-300 dark:border-zinc-800 bg-white/90 dark:bg-zinc-950/90 p-6 sm:p-7">
+          <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 pb-4 border-b border-zinc-200 dark:border-zinc-800/80">
+            <div>
+              <div class="flex flex-wrap items-center gap-2">
+                <h3 class="font-display text-lg font-bold text-[#111111] dark:text-[#fafafa]">Qatar Chemical Company Ltd. (QChem)</h3>
+                <span class="font-mono text-[11px] px-2 py-0.5 rounded-md border border-emerald-600/30 dark:border-emerald-500/30 bg-emerald-500/10 text-emerald-800 dark:text-emerald-300">Cyber Security & HR Systems</span>
+              </div>
+              <p class="mt-1 text-sm font-medium text-zinc-700 dark:text-zinc-300">Intern, Cyber Security & HR Systems</p>
+            </div>
+            <div class="flex flex-wrap sm:flex-col sm:items-end gap-1.5 font-mono text-xs text-zinc-500 dark:text-zinc-400">
+              <span class="px-2.5 py-0.5 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300">Jun 2026 to Aug 2026</span>
+              <span>Doha, Qatar</span>
+            </div>
+          </div>
+          <ul class="mt-4 space-y-2.5 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed list-disc pl-5 marker:text-emerald-600 dark:marker:text-emerald-500">
+            <li>Supported HR system administration and employee relations in SAP and SuccessFactors, tracing how employee records move across enterprise modules.</li>
+            <li>Studied attack types (malware, phishing, social engineering, DoS, man-in-the-middle) and how teams scan, prioritize, and patch vulnerabilities.</li>
+            <li>Worked through IAM concepts including MFA, RBAC, and least privilege, alongside incident response workflows, log analysis, and SIEM basics.</li>
+            <li>Built practical grounding in security governance, compliance frameworks, policy, and cryptography (encryption, hashing, PKI).</li>
           </ul>
-        </div>
+        </article>
 
-        <div class="exp-card">
-          <div class="exp-header">
-            <div class="exp-title">
-              <h3>Nakilat</h3>
-              <h4>Cyber Security Intern | Doha, Qatar</h4>
+        <!-- Entry 2: Nakilat IT Intern (Separated) -->
+        <article class="spotlight-card rounded-2xl border border-zinc-300 dark:border-zinc-800 bg-white/90 dark:bg-zinc-950/90 p-6 sm:p-7">
+          <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 pb-4 border-b border-zinc-200 dark:border-zinc-800/80">
+            <div>
+              <div class="flex flex-wrap items-center gap-2">
+                <h3 class="font-display text-lg font-bold text-[#111111] dark:text-[#fafafa]">Nakilat (Qatar Gas Transport Company Ltd.)</h3>
+                <span class="font-mono text-[11px] px-2 py-0.5 rounded-md border border-sky-600/30 dark:border-sky-500/30 bg-sky-500/10 text-sky-800 dark:text-sky-300">IT Department</span>
+              </div>
+              <p class="mt-1 text-sm font-medium text-zinc-700 dark:text-zinc-300">IT Intern</p>
             </div>
-            <span class="exp-date">Jul 2025 – Aug 2025</span>
+            <div class="flex flex-wrap sm:flex-col sm:items-end gap-1.5 font-mono text-xs text-zinc-500 dark:text-zinc-400">
+              <span class="px-2.5 py-0.5 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300">Aug 2025 to Sep 2025</span>
+              <span>Doha, Qatar</span>
+            </div>
           </div>
-          <ul class="exp-details">
-            <li>Led an organization-wide phishing simulation achieving a company-high 40.6% reporting rate; processed reports using PhishER.</li>
-            <li>Developed a Third-Party Risk Assessment Application reducing manual assessment time by 95% (48 hours to 10 minutes).</li>
-            <li>Built a Risk Analyzer Tool for automated CSV/Excel processing, achieving 90% faster processing for vendor data.</li>
+          <ul class="mt-4 space-y-2.5 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed list-disc pl-5 marker:text-sky-600 dark:marker:text-sky-400">
+            <li>Built a full-stack AI HR chatbot with a React frontend and Flask backend so employees could search open job requisitions and submit leave requests.</li>
+            <li>Connected the chatbot to Nakilat's internal SAP API, configuring and testing endpoints manually in Postman.</li>
           </ul>
-        </div>
+        </article>
 
-      </div>
-    </div>
-  </section>
-
-  <section id="skills" class="section">
-    <div class="container">
-      <div class="section-header">
-        <h2 class="section-title">Technical Skills</h2>
-        <p class="section-subtitle">
-          A comprehensive toolkit bridging enterprise security, data science, and interactive development
-        </p>
-      </div>
-      <div class="skills-grid">
-        
-        <div class="skill-category">
-          <h3><i class="fas fa-shield-alt"></i>Cyber Security</h3>
-          <div class="skill-tags">
-            <span class="skill-tag">Firewalls & iptables</span>
-            <span class="skill-tag">IDS/IPS & ZTA</span>
-            <span class="skill-tag">Wireshark & Tshark</span>
-            <span class="skill-tag">OpenVAS & Nmap</span>
-            <span class="skill-tag">Metasploit</span>
-            <span class="skill-tag">PKI & Cryptography</span>
-          </div>
-        </div>
-
-        <div class="skill-category">
-          <h3><i class="fas fa-brain"></i>AI & Data Science</h3>
-          <div class="skill-tags">
-            <span class="skill-tag">Machine Learning</span>
-            <span class="skill-tag">Pandas</span>
-            <span class="skill-tag">NumPy</span>
-            <span class="skill-tag">Matplotlib</span>
-            <span class="skill-tag">Seaborn</span>
-          </div>
-        </div>
-
-        <div class="skill-category">
-          <h3><i class="fas fa-code"></i>Programming</h3>
-          <div class="skill-tags">
-            <span class="skill-tag">Python</span>
-            <span class="skill-tag">Java</span>
-            <span class="skill-tag">C#</span>
-            <span class="skill-tag">C/C++</span>
-            <span class="skill-tag">SQL</span>
-            <span class="skill-tag">Haskell</span>
-            <span class="skill-tag">JavaScript</span>
-          </div>
-        </div>
-
-        <div class="skill-category">
-          <h3><i class="fas fa-globe"></i>Web & Game Dev</h3>
-          <div class="skill-tags">
-            <span class="skill-tag">React & Flask</span>
-            <span class="skill-tag">Spring Boot</span>
-            <span class="skill-tag">Unity Engine</span>
-            <span class="skill-tag">Git & Jira</span>
-            <span class="skill-tag">Cisco CCNAv7</span>
-            <span class="skill-tag">HTML5</span>
-            <span class="skill-tag">CSS3</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <section id="projects" class="section">
-    <div class="container">
-      <div class="section-header">
-        <h2 class="section-title">Featured Projects</h2>
-        <p class="section-subtitle">
-          Showcasing enterprise solutions, AI integration, full-stack web applications, and game mechanics
-        </p>
-      </div>
-      <div class="projects-grid">
-
-        <div class="project-card">
-          <div class="project-header">
-            <div class="project-icon">
-              <i class="fa-solid fa-robot"></i>
+        <!-- Entry 3: Nakilat Cyber Security Intern (Separated) -->
+        <article class="spotlight-card rounded-2xl border border-zinc-300 dark:border-zinc-800 bg-white/90 dark:bg-zinc-950/90 p-6 sm:p-7">
+          <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 pb-4 border-b border-zinc-200 dark:border-zinc-800/80">
+            <div>
+              <div class="flex flex-wrap items-center gap-2">
+                <h3 class="font-display text-lg font-bold text-[#111111] dark:text-[#fafafa]">Nakilat (Qatar Gas Transport Company Ltd.)</h3>
+                <span class="font-mono text-[11px] px-2 py-0.5 rounded-md border border-emerald-600/30 dark:border-emerald-500/30 bg-emerald-500/10 text-emerald-800 dark:text-emerald-300">Cyber Security Department</span>
+              </div>
+              <p class="mt-1 text-sm font-medium text-zinc-700 dark:text-zinc-300">Cyber Security Intern</p>
             </div>
-            <h3>Enterprise HR AI Chatbot</h3>
-            <p>
-              Developed a fully functional AI chatbot integrated securely with internal SAP APIs, allowing employees to search job requisitions and apply for leave. Built to ensure enterprise-level performance.
+            <div class="flex flex-wrap sm:flex-col sm:items-end gap-1.5 font-mono text-xs text-zinc-500 dark:text-zinc-400">
+              <span class="px-2.5 py-0.5 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300">Jul 2025 to Aug 2025</span>
+              <span>Doha, Qatar</span>
+            </div>
+          </div>
+          <ul class="mt-4 space-y-2.5 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed list-disc pl-5 marker:text-emerald-600 dark:marker:text-emerald-500">
+            <li>Ran an organisation-wide phishing simulation processed through PhishER, reaching a company-high 40.6% reporting rate.</li>
+            <li>Built a Third-Party Risk Assessment Application that cut manual vendor review time from 48 hours to 10 minutes (over 99% faster).</li>
+            <li>Created a Risk Analyzer Tool to automate CSV and Excel vendor data processing, cutting processing time by 90%.</li>
+            <li>Shadowed SOC analysts on live SIEM dashboards for log triage and escalation, and observed Data Loss Prevention (DLP) classification and vendor vulnerability tracking.</li>
+          </ul>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Projects Section: Filterable Grid + Click-to-Inspect Modal -->
+    <section id="projects" class="py-16 sm:py-20 border-b border-zinc-300/80 dark:border-zinc-800/90">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-5 mb-10">
+        <div>
+          <span class="font-mono text-xs text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">02 / Builds & tools</span>
+          <h2 class="mt-1 font-display text-2xl sm:text-3xl font-bold tracking-tight">Projects</h2>
+          <p class="mt-1 text-sm text-zinc-600 dark:text-zinc-400">Select any card to read the technical breakdown.</p>
+        </div>
+
+        <!-- Category Filter Tabs -->
+        <div role="tablist" aria-label="Filter projects" class="inline-flex flex-wrap items-center gap-1 rounded-xl border border-zinc-300 dark:border-zinc-800 bg-zinc-200/70 dark:bg-zinc-900/90 p-1">
+          <button type="button" role="tab" aria-selected="true" data-filter="all" class="filter-tab px-3 py-1.5 text-xs font-mono font-medium rounded-lg transition-all bg-white dark:bg-zinc-950 text-zinc-950 dark:text-zinc-50 shadow-sm">All (9)</button>
+          <button type="button" role="tab" aria-selected="false" data-filter="Cyber Security" class="filter-tab px-3 py-1.5 text-xs font-mono font-medium rounded-lg transition-all text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100">Cyber Security</button>
+          <button type="button" role="tab" aria-selected="false" data-filter="Enterprise & AI" class="filter-tab px-3 py-1.5 text-xs font-mono font-medium rounded-lg transition-all text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100">Enterprise & AI</button>
+          <button type="button" role="tab" aria-selected="false" data-filter="Software & Games" class="filter-tab px-3 py-1.5 text-xs font-mono font-medium rounded-lg transition-all text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100">Software & Games</button>
+        </div>
+      </div>
+
+      <!-- Projects Grid rendered dynamically from structured project data -->
+      <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    </section>
+
+    <!-- Education & Certifications Section -->
+    <section id="education" class="py-16 sm:py-20 border-b border-zinc-300/80 dark:border-zinc-800/90">
+      <div class="mb-10">
+        <span class="font-mono text-xs text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">03 / Academics</span>
+        <h2 class="mt-1 font-display text-2xl sm:text-3xl font-bold tracking-tight">Education & certifications</h2>
+      </div>
+
+      <!-- Degrees -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <article class="spotlight-card rounded-2xl border border-zinc-300 dark:border-zinc-800 bg-white/90 dark:bg-zinc-950/90 p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex flex-wrap items-start justify-between gap-2">
+              <div>
+                <h3 class="font-display text-lg font-bold text-[#111111] dark:text-[#fafafa]">University College London (UCL)</h3>
+                <p class="text-sm font-medium text-emerald-700 dark:text-emerald-400">MSc Information Security (NCSC-Certified Degree)</p>
+              </div>
+              <span class="font-mono text-xs px-2.5 py-0.5 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300">2026 to 2027 (Expected)</span>
+            </div>
+            <p class="mt-1 font-mono text-xs text-zinc-500 dark:text-zinc-400">London, UK</p>
+            <p class="mt-4 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+              Modules: Introduction to Cryptography, Computer Security 1 & 2, Information Security Management, Malware, People & Security, Research in Information Security, Philosophy, Politics & Economics of Security & Privacy.
             </p>
-            <div class="project-tech">
-              <span class="tech-tag">React</span>
-              <span class="tech-tag">Flask</span>
-              <span class="tech-tag">SAP API</span>
-              <span class="tech-tag">AI Integration</span>
-            </div>
           </div>
-          <div class="project-links">
-            <span class="project-link" style="cursor: default; color: #64748b;">
-              <i class="fas fa-lock"></i>
-              Enterprise Project (Internal)
-            </span>
-          </div>
-        </div>
+        </article>
 
-        <div class="project-card">
-          <div class="project-header">
-            <div class="project-icon">
-              <i class="fa-solid fa-file-shield"></i>
+        <article class="spotlight-card rounded-2xl border border-zinc-300 dark:border-zinc-800 bg-white/90 dark:bg-zinc-950/90 p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex flex-wrap items-start justify-between gap-2">
+              <div>
+                <h3 class="font-display text-lg font-bold text-[#111111] dark:text-[#fafafa]">University of Essex</h3>
+                <p class="text-sm font-medium text-emerald-700 dark:text-emerald-400">BSc Hons Computer Science (First Class Honours)</p>
+              </div>
+              <span class="font-mono text-xs px-2.5 py-0.5 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300">2023 to 2026</span>
             </div>
-            <h3>Automated Risk Assessment Suite</h3>
-            <p>
-              Built a Risk Analyzer Tool and Third-Party Assessment Application for automated CSV/Excel processing. This suite successfully reduced manual vendor assessment time by 95% (from 48 hours to just 10 minutes).
+            <p class="mt-1 font-mono text-xs text-zinc-500 dark:text-zinc-400">Colchester, UK</p>
+            <p class="mt-4 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+              Independent third-year dissertation graded First-Class (80%+). Dean's List of Excellence for Years 1, 2, and 3. First-Class grades in Computer Security, Network Security, Network Fundamentals, AI, Data Science, and Evolutionary Computation.
             </p>
-            <div class="project-tech">
-              <span class="tech-tag">Python</span>
-              <span class="tech-tag">Automation</span>
-              <span class="tech-tag">Risk Analysis</span>
-              <span class="tech-tag">Data Processing</span>
-            </div>
           </div>
-          <div class="project-links">
-            <span class="project-link" style="cursor: default; color: #64748b;">
-              <i class="fas fa-lock"></i>
-              Enterprise Tool (Internal)
-            </span>
-          </div>
-        </div>
-
-        <div class="project-card">
-          <div class="project-header">
-            <div class="project-icon">
-              <i class="fa-brands fa-unity"></i>
-            </div>
-            <h3>Immersive 3D Environments</h3>
-            <p>
-              Architected immersive 3D game environments leveraging the Unity engine. Engineered sophisticated game mechanics, 
-              physics interactions, and complex logic using advanced C# scripting and rendering pipeline optimization.
-            </p>
-            <div class="project-tech">
-              <span class="tech-tag">Unity</span>
-              <span class="tech-tag">C#</span>
-              <span class="tech-tag">Game Development</span>
-            </div>
-          </div>
-          <div class="project-links">
-            <a href="https://github.com/Rumman05" target="_blank" rel="noopener noreferrer" class="project-link">
-              <i class="fab fa-github"></i>
-              View Profile
-            </a>
-          </div>
-        </div>
-
-        <div class="project-card">
-          <div class="project-header">
-            <div class="project-icon">
-              <i class="fa-brands fa-java"></i>
-            </div>
-            <h3>ChildMinder Pro</h3>
-            <p>
-              A comprehensive full-stack application for monitoring and analyzing child behavior patterns.
-              Features real-time data visualization, secure authentication, and responsive design
-              for cross-platform compatibility.
-            </p>
-            <div class="project-tech">
-              <span class="tech-tag">Spring Boot</span>
-              <span class="tech-tag">Java</span>
-              <span class="tech-tag">Data Visualization</span>
-            </div>
-          </div>
-          <div class="project-links">
-            <a href="https://github.com/Rumman05/ChildMinder" target="_blank" rel="noopener noreferrer" class="project-link">
-              <i class="fab fa-github"></i>
-              Source Code
-            </a>
-          </div>
-        </div>
-
-        <div class="project-card">
-          <div class="project-header">
-            <div class="project-icon">
-               <i class="fa-solid fa-heart-pulse"></i>
-            </div>
-            <h3>Heart Disease Predictor</h3>
-            <p>
-              Led a team to develop a machine learning model predicting heart disease risk with 93% accuracy. 
-              Conducted deep exploratory data analysis (EDA) and tested multiple methods to optimize performance.
-            </p>
-            <div class="project-tech">
-              <span class="tech-tag">Python</span>
-              <span class="tech-tag">Machine Learning</span>
-              <span class="tech-tag">Pandas/NumPy</span>
-            </div>
-          </div>
-          <div class="project-links">
-            <a href="https://github.com/Rumman05" target="_blank" rel="noopener noreferrer" class="project-link">
-              <i class="fab fa-github"></i>
-              Source Code
-            </a>
-          </div>
-        </div>
-
-        <div class="project-card">
-          <div class="project-header">
-            <div class="project-icon">
-              <i class="fa-brands fa-react"></i>
-            </div>
-            <h3>FlashMind AI</h3>
-            <p>
-              An intelligent study assistant powered by Groq's API, featuring automated flashcard
-              generation and adaptive quiz systems. Designed to enhance learning efficiency through
-              personalized educational content.
-            </p>
-            <div class="project-tech">
-              <span class="tech-tag">React</span>
-              <span class="tech-tag">Node.js</span>
-              <span class="tech-tag">AI Integration</span>
-            </div>
-          </div>
-          <div class="project-links">
-            <a href="https://github.com/Rumman05/FlashMind-AI" target="_blank" rel="noopener noreferrer" class="project-link">
-              <i class="fab fa-github"></i>
-              Source Code
-            </a>
-          </div>
-        </div>
-
+        </article>
       </div>
-    </div>
-  </section>
 
-  <section id="contact" class="section">
-    <div class="container">
-      <div class="section-header">
-        <h2 class="section-title">Let's Connect</h2>
-        <p class="section-subtitle">
-          Ready to collaborate on secure infrastructure, innovative software, or game design.
-        </p>
-      </div>
-      <div class="contact-content">
-        <div class="contact-info">
-          <a href="mailto:Rummanlakhani2005@gmail.com" class="contact-item">
-            <i class="fas fa-envelope"></i>
-            <h4>Email</h4>
-          </a>
-          <a href="https://github.com/Rumman05" target="_blank" rel="noopener noreferrer" class="contact-item">
-            <i class="fab fa-github"></i>
-            <h4>GitHub</h4>
-          </a>
-          <a href="https://www.linkedin.com/in/muhammad-rumman-umed/" target="_blank" rel="noopener noreferrer" class="contact-item">
-            <i class="fab fa-linkedin"></i>
-            <h4>LinkedIn</h4>
-          </a>
+      <!-- Certifications Row -->
+      <div class="mt-5 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="spotlight-card rounded-xl border border-zinc-300 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/80 p-5">
+          <div class="flex items-center justify-between gap-2">
+            <h3 class="font-display text-base font-bold text-[#111111] dark:text-[#fafafa]">CompTIA Security+</h3>
+            <span class="font-mono text-[11px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border border-emerald-500/30">SY0-701</span>
+          </div>
+          <p class="mt-2 text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">Passed 2026, valid until 2029.</p>
+        </div>
+
+        <div class="spotlight-card rounded-xl border border-zinc-300 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/80 p-5">
+          <div class="flex items-center justify-between gap-2">
+            <h3 class="font-display text-base font-bold text-[#111111] dark:text-[#fafafa]">Cisco CCNAv7</h3>
+            <span class="font-mono text-[11px] px-2 py-0.5 rounded bg-sky-500/10 text-sky-800 dark:text-sky-300 border border-sky-500/30">Network</span>
+          </div>
+          <p class="mt-2 text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">Network security, firewalls, VPNs, IDS/IPS, segmentation, ACLs, subnetting.</p>
+        </div>
+
+        <div class="spotlight-card rounded-xl border border-zinc-300 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/80 p-5">
+          <div class="flex items-center justify-between gap-2">
+            <h3 class="font-display text-base font-bold text-[#111111] dark:text-[#fafafa]">NCSC Degree Certification</h3>
+            <span class="font-mono text-[11px] px-2 py-0.5 rounded bg-zinc-200 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 border border-zinc-300 dark:border-zinc-800">Expected 2027</span>
+          </div>
+          <p class="mt-2 text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">Awarded on completion of UCL MSc (Expected 2027).</p>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <footer>
-    <div class="container">
-      <p>&copy; <span id="copyright-year">2026</span> Muhammad Rumman Umed. All Rights Reserved.</p>
+    <!-- Skills Bento Matrix -->
+    <section id="skills" class="py-16 sm:py-20 border-b border-zinc-300/80 dark:border-zinc-800/90">
+      <div class="mb-10">
+        <span class="font-mono text-xs text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">04 / Stack</span>
+        <h2 class="mt-1 font-display text-2xl sm:text-3xl font-bold tracking-tight">Skills</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Security & Forensics -->
+        <div class="spotlight-card rounded-2xl border border-zinc-300 dark:border-zinc-800 bg-white/90 dark:bg-zinc-950/90 p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-display text-base font-bold text-[#111111] dark:text-[#fafafa]">Security & Forensics</h3>
+            <span class="font-mono text-[11px] text-emerald-700 dark:text-emerald-400">SEC</span>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">Wireshark</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">Nmap</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">Kali Linux</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">Metasploit</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">Splunk</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">PhishER</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">SIEM Log Triage</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">IDS/IPS</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">Firewalls</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">VPNs (IPsec, SSL/TLS)</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">Kerberos</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">PKI</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">IAM (MFA, RBAC)</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">Malware Analysis</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">IOC Extraction</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">Incident Response</span>
+          </div>
+        </div>
+
+        <!-- Programming -->
+        <div class="spotlight-card rounded-2xl border border-zinc-300 dark:border-zinc-800 bg-white/90 dark:bg-zinc-950/90 p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-display text-base font-bold text-[#111111] dark:text-[#fafafa]">Programming</h3>
+            <span class="font-mono text-[11px] text-sky-700 dark:text-sky-400">CODE</span>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">Python</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">Java</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">C#</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">C++</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">C</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">SQL</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">Haskell</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">JavaScript</span>
+          </div>
+        </div>
+
+        <!-- Web, AI & Data -->
+        <div class="spotlight-card rounded-2xl border border-zinc-300 dark:border-zinc-800 bg-white/90 dark:bg-zinc-950/90 p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-display text-base font-bold text-[#111111] dark:text-[#fafafa]">Web, AI & Data</h3>
+            <span class="font-mono text-[11px] text-emerald-700 dark:text-emerald-400">BUILD</span>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">React</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">Flask</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">Spring Boot</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">HTML/CSS</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">Scikit-Learn</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">Pandas</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">NumPy</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">Power BI</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">Azure OpenAI</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">Groq API</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">Unity Engine</span>
+          </div>
+        </div>
+
+        <!-- Compliance & Platforms -->
+        <div class="spotlight-card rounded-2xl border border-zinc-300 dark:border-zinc-800 bg-white/90 dark:bg-zinc-950/90 p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-display text-base font-bold text-[#111111] dark:text-[#fafafa]">Compliance & Platforms</h3>
+            <span class="font-mono text-[11px] text-sky-700 dark:text-sky-400">OPS</span>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">GDPR & UK GDPR</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">UK DPA 2018</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">EU NIS2</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">EU DORA</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">SAP APIs</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">SuccessFactors</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">Postman</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">Jira</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">Git</span>
+            <span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">Cisco Packet Tracer</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 sm:py-20">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 mb-8">
+        <div>
+          <span class="font-mono text-xs text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">05 / Reach out</span>
+          <h2 class="mt-1 font-display text-2xl sm:text-3xl font-bold tracking-tight">Contact</h2>
+          <p class="mt-1 text-sm text-zinc-600 dark:text-zinc-400">Available for graduate roles and internships in security engineering, cyber operations, and software development.</p>
+        </div>
+        <span class="font-mono text-xs text-zinc-500 dark:text-zinc-400">London, UK</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Email Copy Card -->
+        <button
+          type="button"
+          data-copy-email
+          class="spotlight-card text-left rounded-2xl border border-zinc-300 dark:border-zinc-800 bg-white/90 dark:bg-zinc-950/90 p-5 hover:border-emerald-500/60 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+        >
+          <div class="flex items-center justify-between font-mono text-xs text-zinc-500 dark:text-zinc-400">
+            <span>Email</span>
+            <span class="text-emerald-700 dark:text-emerald-400">Click to copy</span>
+          </div>
+          <div class="mt-2 font-mono text-sm font-medium text-[#111111] dark:text-[#fafafa] truncate">rummanlakhani2005@gmail.com</div>
+        </button>
+
+        <!-- GitHub Card -->
+        <a
+          href="https://github.com/Rumman05"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="spotlight-card rounded-2xl border border-zinc-300 dark:border-zinc-800 bg-white/90 dark:bg-zinc-950/90 p-5 hover:border-emerald-500/60 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+        >
+          <div class="flex items-center justify-between font-mono text-xs text-zinc-500 dark:text-zinc-400">
+            <span>GitHub</span>
+            <span>External</span>
+          </div>
+          <div class="mt-2 font-mono text-sm font-medium text-[#111111] dark:text-[#fafafa]">github.com/Rumman05</div>
+        </a>
+
+        <!-- LinkedIn Card -->
+        <a
+          href="https://www.linkedin.com/in/muhammad-rumman-umed/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="spotlight-card rounded-2xl border border-zinc-300 dark:border-zinc-800 bg-white/90 dark:bg-zinc-950/90 p-5 hover:border-sky-500/60 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+        >
+          <div class="flex items-center justify-between font-mono text-xs text-zinc-500 dark:text-zinc-400">
+            <span>LinkedIn</span>
+            <span>External</span>
+          </div>
+          <div class="mt-2 font-mono text-sm font-medium text-[#111111] dark:text-[#fafafa]">linkedin.com/in/muhammad-rumman-umed</div>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Minimal Footer -->
+  <footer class="border-t border-zinc-300/80 dark:border-zinc-800/90 py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-2 font-mono text-xs text-zinc-500 dark:text-zinc-400">
+      <p>&copy; <span id="copyright-year">2026</span> Muhammad Rumman Umed</p>
+      <p>London, UK · Press Cmd+K for shortcuts</p>
     </div>
   </footer>
 
+  <!-- Project Detail Modal (shadcn Dialog style) -->
+  <div id="project-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/70 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div id="project-modal-panel" class="w-full max-w-xl rounded-2xl border border-zinc-300 dark:border-zinc-800 bg-[#f5f4ef] dark:bg-zinc-950 shadow-2xl overflow-hidden">
+      <div class="flex items-start justify-between gap-4 p-6 border-b border-zinc-200 dark:border-zinc-800">
+        <div>
+          <div id="modal-badges" class="flex flex-wrap items-center gap-2 mb-2"></div>
+          <h3 id="modal-title" class="font-display text-xl font-bold text-[#111111] dark:text-[#fafafa]"></h3>
+          <p id="modal-tagline" class="mt-1 text-sm text-zinc-600 dark:text-zinc-400"></p>
+        </div>
+        <button
+          id="close-project-modal"
+          type="button"
+          aria-label="Close project details"
+          class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-zinc-300 dark:border-zinc-800 text-zinc-500 hover:text-zinc-950 dark:hover:text-zinc-50 hover:bg-zinc-200/70 dark:hover:bg-zinc-900 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+        >
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="p-6 space-y-5">
+        <p id="modal-description" class="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed"></p>
+
+        <div id="modal-metric-box" class="hidden rounded-xl border border-emerald-600/30 dark:border-emerald-500/30 bg-emerald-500/10 px-4 py-3">
+          <div class="font-mono text-[11px] uppercase tracking-wider text-emerald-800 dark:text-emerald-300">Measured outcome</div>
+          <div id="modal-metric-value" class="mt-0.5 font-display text-lg font-bold text-emerald-900 dark:text-emerald-200"></div>
+        </div>
+
+        <div>
+          <div class="font-mono text-[11px] uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-2">Tech stack</div>
+          <div id="modal-tech" class="flex flex-wrap gap-1.5"></div>
+        </div>
+      </div>
+
+      <div id="modal-footer" class="px-6 py-4 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-200/50 dark:bg-zinc-900/50 flex items-center justify-between gap-3"></div>
+    </div>
+  </div>
+
+  <!-- Command Palette Modal (Cmd+K / Ctrl+K) -->
+  <div id="cmd-modal" class="fixed inset-0 z-50 hidden items-start justify-center pt-[12vh] p-4 bg-black/70 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Command palette">
+    <div class="w-full max-w-lg rounded-2xl border border-zinc-300 dark:border-zinc-800 bg-[#f5f4ef] dark:bg-zinc-950 shadow-2xl overflow-hidden">
+      <div class="flex items-center gap-3 px-4 py-3 border-b border-zinc-200 dark:border-zinc-800">
+        <svg class="h-4 w-4 text-zinc-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" />
+        </svg>
+        <input
+          id="cmd-input"
+          type="text"
+          autocomplete="off"
+          placeholder="Jump to section, filter projects, or run an action..."
+          class="w-full bg-transparent text-sm text-[#111111] dark:text-[#fafafa] placeholder:text-zinc-500 focus:outline-none"
+        />
+        <kbd class="font-mono text-[10px] px-1.5 py-0.5 rounded border border-zinc-300 dark:border-zinc-700 text-zinc-500">ESC</kbd>
+      </div>
+      <ul id="cmd-list" role="listbox" class="max-h-72 overflow-y-auto p-2 space-y-1"></ul>
+      <div class="px-4 py-2 border-t border-zinc-200 dark:border-zinc-800 flex items-center justify-between font-mono text-[11px] text-zinc-500">
+        <span>Arrow keys to navigate</span>
+        <span>Enter to select</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Copy Email Toast Notification -->
+  <div
+    id="toast"
+    role="status"
+    aria-live="polite"
+    class="fixed bottom-5 right-5 z-50 pointer-events-none opacity-0 translate-y-3 transition-all duration-200 rounded-xl border border-emerald-500/40 bg-zinc-950 text-zinc-100 px-4 py-3 shadow-xl flex items-center gap-2.5 font-mono text-xs"
+  >
+    <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
+    <span id="toast-message">Copied rummanlakhani2005@gmail.com</span>
+  </div>
+
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Floating particles
-      const particlesContainer = document.getElementById('particles');
-      const particleCount = 50;
-      for (let i = 0; i < particleCount; i++) {
-        let particle = document.createElement('div');
-        particle.classList.add('particle');
-        particle.style.top = `${Math.random() * 100}vh`;
-        particle.style.left = `${Math.random() * 100}vw`;
-        particle.style.animationDuration = `${Math.random() * 5 + 5}s`;
-        particle.style.animationDelay = `${Math.random() * 5}s`;
-        particlesContainer.appendChild(particle);
+    (function () {
+      'use strict';
+
+      /* =====================================================================
+         1. STRUCTURED PROJECT DATA (All 9 Projects, Nakilat Separated)
+         ===================================================================== */
+      const PROJECTS = [
+        {
+          id: 'phishtrap',
+          title: 'PhishTrap',
+          tagline: 'Stateless Phishing Threat-Triage Engine',
+          category: 'Cyber Security',
+          badge: 'Personal Build',
+          metric: 'Zero persistence (In-memory)',
+          description:
+            'Privacy-first Flask app that analyzes suspicious emails entirely in memory with zero database or session storage to align with GDPR and CCPA. Combines a six-layer deterministic pipeline (domain similarity, homograph/Punycode detection, SPF/DKIM/DMARC header parsing, IOC extraction and defanging) with a TF-IDF and Random Forest classifier in Scikit-Learn and a human-override step for spear-phishing edge cases.',
+          tech: ['Python', 'Flask', 'Scikit-Learn', 'SPF/DKIM/DMARC', 'In-Memory'],
+          link: 'https://github.com/Rumman05',
+          linkLabel: 'View on GitHub',
+          status: null,
+        },
+        {
+          id: 'nakilat-tprm',
+          title: 'Third-Party Risk Assessment App',
+          tagline: 'Automated vendor security review application',
+          category: 'Cyber Security',
+          badge: 'Nakilat · Cyber Security Dept',
+          metric: '48 hrs -> 10 min',
+          description:
+            'Built an internal application to automate third-party vendor security reviews at Nakilat. Replaced a manual 48-hour workflow with a 10-minute automated assessment, cutting turnaround time by over 99%.',
+          tech: ['Python', 'Automation', 'Vendor Risk', 'Security Ops'],
+          link: null,
+          linkLabel: null,
+          status: 'Internal enterprise tool',
+        },
+        {
+          id: 'nakilat-risk-analyzer',
+          title: 'Vendor Risk Analyzer Tool',
+          tagline: 'Automated spreadsheet parser and scorer',
+          category: 'Cyber Security',
+          badge: 'Nakilat · Cyber Security Dept',
+          metric: '90% faster',
+          description:
+            'Developed an automated CSV and Excel processing tool for Nakilat\'s cyber security team to parse, score, and summarize vendor risk spreadsheets 90% faster than manual review.',
+          tech: ['Python', 'CSV/Excel', 'Data Parsing', 'Risk Scoring'],
+          link: null,
+          linkLabel: null,
+          status: 'Internal enterprise tool',
+        },
+        {
+          id: 'nakilat-phishing-sim',
+          title: 'Organisation-Wide Phishing Simulation',
+          tagline: 'Company-wide campaign and PhishER triage',
+          category: 'Cyber Security',
+          badge: 'Nakilat · Cyber Security Dept',
+          metric: '40.6% report rate',
+          description:
+            'Designed and ran a company-wide phishing simulation at Nakilat and triaged incoming employee reports in PhishER. Reached a 40.6% reporting rate, the highest recorded at the company.',
+          tech: ['PhishER', 'Phishing Ops', 'Alert Triage', 'Human Risk'],
+          link: null,
+          linkLabel: null,
+          status: 'Internal security campaign',
+        },
+        {
+          id: 'nakilat-hr-chatbot',
+          title: 'Enterprise HR AI Chatbot',
+          tagline: 'Internal SAP-integrated assistant',
+          category: 'Enterprise & AI',
+          badge: 'Nakilat · IT Dept',
+          metric: 'Live SAP API integration',
+          description:
+            'Full-stack internal assistant built with React and Flask so employees can search open job requisitions and apply for leave through natural language. Integrated directly with internal SAP APIs tested in Postman.',
+          tech: ['React', 'Flask', 'SAP API', 'Postman', 'Azure OpenAI'],
+          link: null,
+          linkLabel: null,
+          status: 'Internal enterprise tool',
+        },
+        {
+          id: 'heart-disease-ml',
+          title: 'Heart Disease Prediction Model',
+          tagline: 'Team-led clinical risk classifier',
+          category: 'Enterprise & AI',
+          badge: 'Team Lead (6 Members)',
+          metric: '93% accuracy',
+          description:
+            'Led a team of six to build a machine learning model predicting heart disease risk. Ran exploratory data analysis, compared six algorithms to reach 93% accuracy, and presented the results to mock investors.',
+          tech: ['Python', 'Scikit-Learn', 'Pandas', 'NumPy', 'EDA'],
+          link: 'https://github.com/Rumman05',
+          linkLabel: 'View on GitHub',
+          status: null,
+        },
+        {
+          id: 'flashmind-ai',
+          title: 'FlashMind AI',
+          tagline: 'Automated flashcards and adaptive quizzes',
+          category: 'Enterprise & AI',
+          badge: 'Web Application',
+          metric: null,
+          description:
+            'Study assistant powered by Groq\'s API that generates flashcards and adaptive quizzes automatically from notes.',
+          tech: ['React', 'Node.js', 'Groq API'],
+          link: 'https://github.com/Rumman05/FlashMind-AI',
+          linkLabel: 'Source code',
+          status: null,
+        },
+        {
+          id: 'childminder-pro',
+          title: 'ChildMinder Pro',
+          tagline: 'Behaviour logging and analytics platform',
+          category: 'Software & Games',
+          badge: 'Full-Stack Java',
+          metric: null,
+          description:
+            'Full-stack Java and Spring Boot app for logging and visualizing child behavior patterns with authentication and responsive layouts.',
+          tech: ['Java', 'Spring Boot', 'Data Visualization'],
+          link: 'https://github.com/Rumman05/ChildMinder',
+          linkLabel: 'Source code',
+          status: null,
+        },
+        {
+          id: 'unity-3d-games',
+          title: '3D Game Environments & Mechanics',
+          tagline: 'Interactive scenes and physics in Unity',
+          category: 'Software & Games',
+          badge: 'Game Development',
+          metric: null,
+          description:
+            'Built 3D scenes, physics interactions, and gameplay systems in Unity using C# scripting.',
+          tech: ['Unity', 'C#', 'Game Physics'],
+          link: 'https://github.com/Rumman05',
+          linkLabel: 'View on GitHub',
+          status: null,
+        },
+      ];
+
+      /* =====================================================================
+         2. HELPER: SAFE CLIPBOARD COPY + TOAST NOTIFICATION
+         ===================================================================== */
+      const EMAIL = 'rummanlakhani2005@gmail.com';
+      let toastTimer = null;
+
+      function showToast(message) {
+        const toast = document.getElementById('toast');
+        const msgEl = document.getElementById('toast-message');
+        if (!toast || !msgEl) return;
+        msgEl.textContent = message;
+        toast.classList.remove('opacity-0', 'translate-y-3', 'pointer-events-none');
+        toast.classList.add('opacity-100', 'translate-y-0');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toast.classList.add('opacity-0', 'translate-y-3', 'pointer-events-none');
+          toast.classList.remove('opacity-100', 'translate-y-0');
+        }, 2600);
       }
 
-      // Navbar scroll effect
-      const navbar = document.getElementById('navbar');
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-          navbar.classList.add('scrolled');
-        } else {
-          navbar.classList.remove('scrolled');
+      function copyEmailToClipboard() {
+        try {
+          const textarea = document.createElement('textarea');
+          textarea.value = EMAIL;
+          textarea.setAttribute('readonly', '');
+          textarea.style.position = 'fixed';
+          textarea.style.left = '-9999px';
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textarea);
+          showToast('Copied ' + EMAIL);
+        } catch (err) {
+          showToast('Email: ' + EMAIL);
         }
-      });
+      }
 
-      // Mobile menu toggle
-      const menuToggle = document.getElementById('menuToggle');
-      const navLinks = document.getElementById('navLinks');
-      const menuIcon = menuToggle.querySelector('i');
-
-      menuToggle.addEventListener('click', () => {
-        navLinks.classList.toggle('open');
-        if (navLinks.classList.contains('open')) {
-            menuIcon.classList.remove('fa-bars');
-            menuIcon.classList.add('fa-times');
-        } else {
-            menuIcon.classList.remove('fa-times');
-            menuIcon.classList.add('fa-bars');
+      /* =====================================================================
+         3. THEME TOGGLE (Dark Default, Persisted in localStorage)
+         ===================================================================== */
+      function toggleTheme() {
+        const isDark = document.documentElement.classList.toggle('dark');
+        try {
+          localStorage.setItem('rumman-theme', isDark ? 'dark' : 'light');
+        } catch (e) {
+          // Ignore storage restrictions
         }
-      });
+        showToast(isDark ? 'Switched to dark theme' : 'Switched to light theme');
+      }
 
-      // Close mobile menu when a link is clicked
-      document.querySelectorAll('.nav-links a').forEach(link => {
-        link.addEventListener('click', () => {
-          if (navLinks.classList.contains('open')) {
-            navLinks.classList.remove('open');
-            menuIcon.classList.remove('fa-times');
-            menuIcon.classList.add('fa-bars');
+      /* =====================================================================
+         4. SPOTLIGHT CARD HOVER TRACKER
+         ===================================================================== */
+      function bindSpotlights() {
+        const cards = document.querySelectorAll('.spotlight-card');
+        cards.forEach((card) => {
+          if (card.dataset.spotlightBound) return;
+          card.dataset.spotlightBound = 'true';
+          card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            card.style.setProperty('--mouse-x', (e.clientX - rect.left) + 'px');
+            card.style.setProperty('--mouse-y', (e.clientY - rect.top) + 'px');
+          });
+        });
+      }
+
+      /* =====================================================================
+         5. RENDER PROJECTS & FILTERING
+         ===================================================================== */
+      let activeFilter = 'all';
+
+      function renderProjects(filter) {
+        activeFilter = filter;
+        const grid = document.getElementById('projects-grid');
+        if (!grid) return;
+
+        const filtered = filter === 'all'
+          ? PROJECTS
+          : PROJECTS.filter((p) => p.category === filter);
+
+        grid.innerHTML = filtered
+          .map((project) => {
+            const isSec = project.category === 'Cyber Security';
+            const badgeClass = isSec
+              ? 'border-emerald-600/30 dark:border-emerald-500/30 bg-emerald-500/10 text-emerald-800 dark:text-emerald-300'
+              : 'border-sky-600/30 dark:border-sky-500/30 bg-sky-500/10 text-sky-800 dark:text-sky-300';
+
+            const metricHtml = project.metric
+              ? `<span class="font-mono text-[11px] font-semibold text-emerald-700 dark:text-emerald-400">${project.metric}</span>`
+              : '';
+
+            const techHtml = project.tech
+              .slice(0, 4)
+              .map(
+                (t) =>
+                  `<span class="font-mono text-[11px] px-2 py-0.5 rounded border border-zinc-300 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300">${t}</span>`
+              )
+              .join('');
+
+            const footerLabel = project.status
+              ? `<span class="font-mono text-[11px] text-zinc-500 dark:text-zinc-400">${project.status}</span>`
+              : `<span class="font-mono text-[11px] text-emerald-700 dark:text-emerald-400">Open details &rarr;</span>`;
+
+            return `
+              <button
+                type="button"
+                data-project-id="${project.id}"
+                class="project-card spotlight-card text-left rounded-2xl border border-zinc-300 dark:border-zinc-800 bg-white/90 dark:bg-zinc-950/90 p-5 flex flex-col justify-between gap-4 hover:border-emerald-500/60 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+              >
+                <div class="space-y-3">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <span class="font-mono text-[11px] px-2 py-0.5 rounded-md border ${badgeClass}">${project.badge}</span>
+                    ${metricHtml}
+                  </div>
+                  <div>
+                    <h3 class="font-display text-base font-bold text-[#111111] dark:text-[#fafafa]">${project.title}</h3>
+                    <p class="mt-1.5 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed line-clamp-3">${project.description}</p>
+                  </div>
+                </div>
+
+                <div class="space-y-3 pt-3 border-t border-zinc-200 dark:border-zinc-800/80 w-full">
+                  <div class="flex flex-wrap gap-1.5">${techHtml}</div>
+                  <div class="flex items-center justify-between">${footerLabel}</div>
+                </div>
+              </button>
+            `;
+          })
+          .join('');
+
+        // Bind modal click handlers and spotlight effect
+        grid.querySelectorAll('.project-card').forEach((card) => {
+          card.addEventListener('click', () => {
+            const id = card.getAttribute('data-project-id');
+            openProjectModal(id);
+          });
+        });
+
+        // Update filter tab styles
+        document.querySelectorAll('.filter-tab').forEach((tab) => {
+          const selected = tab.getAttribute('data-filter') === filter;
+          tab.setAttribute('aria-selected', String(selected));
+          if (selected) {
+            tab.classList.add('bg-white', 'dark:bg-zinc-950', 'text-zinc-950', 'dark:text-zinc-50', 'shadow-sm');
+            tab.classList.remove('text-zinc-600', 'dark:text-zinc-400');
+          } else {
+            tab.classList.remove('bg-white', 'dark:bg-zinc-950', 'text-zinc-950', 'dark:text-zinc-50', 'shadow-sm');
+            tab.classList.add('text-zinc-600', 'dark:text-zinc-400');
           }
         });
-      });
 
-      // Active nav link on scroll
-      const sections = document.querySelectorAll('section');
-      const navLi = document.querySelectorAll('.nav-links li a');
+        bindSpotlights();
+      }
 
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            navLi.forEach(link => {
-              link.classList.remove('active');
-              if (link.getAttribute('href').substring(1) === entry.target.id) {
-                link.classList.add('active');
-              }
+      /* =====================================================================
+         6. PROJECT DETAIL MODAL
+         ===================================================================== */
+      const projectModal = document.getElementById('project-modal');
+
+      function openProjectModal(projectId) {
+        const project = PROJECTS.find((p) => p.id === projectId);
+        if (!project || !projectModal) return;
+
+        document.getElementById('modal-title').textContent = project.title;
+        document.getElementById('modal-tagline').textContent = project.tagline;
+        document.getElementById('modal-description').textContent = project.description;
+
+        const badgesEl = document.getElementById('modal-badges');
+        badgesEl.innerHTML = `
+          <span class="font-mono text-[11px] px-2 py-0.5 rounded-md border border-emerald-600/30 dark:border-emerald-500/30 bg-emerald-500/10 text-emerald-800 dark:text-emerald-300">${project.category}</span>
+          <span class="font-mono text-[11px] px-2 py-0.5 rounded-md border border-zinc-300 dark:border-zinc-800 bg-zinc-200/70 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300">${project.badge}</span>
+        `;
+
+        const metricBox = document.getElementById('modal-metric-box');
+        const metricVal = document.getElementById('modal-metric-value');
+        if (project.metric) {
+          metricVal.textContent = project.metric;
+          metricBox.classList.remove('hidden');
+        } else {
+          metricBox.classList.add('hidden');
+        }
+
+        const techEl = document.getElementById('modal-tech');
+        techEl.innerHTML = project.tech
+          .map(
+            (t) =>
+              `<span class="font-mono text-xs px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">${t}</span>`
+          )
+          .join('');
+
+        const footerEl = document.getElementById('modal-footer');
+        if (project.link) {
+          footerEl.innerHTML = `
+            <span class="font-mono text-xs text-zinc-500 dark:text-zinc-400">Public repository</span>
+            <a href="${project.link}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 h-9 px-4 rounded-lg bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 text-xs font-semibold transition-colors">
+              <span>${project.linkLabel}</span>
+              <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M7 7h10v10" />
+              </svg>
+            </a>
+          `;
+        } else {
+          footerEl.innerHTML = `
+            <span class="font-mono text-xs text-zinc-600 dark:text-zinc-400">${project.status}</span>
+            <span class="font-mono text-[11px] px-2.5 py-1 rounded-md border border-zinc-300 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400">Private / Internal</span>
+          `;
+        }
+
+        projectModal.classList.remove('hidden');
+        projectModal.classList.add('flex');
+        document.getElementById('close-project-modal').focus();
+      }
+
+      function closeProjectModal() {
+        if (!projectModal) return;
+        projectModal.classList.add('hidden');
+        projectModal.classList.remove('flex');
+      }
+
+      /* =====================================================================
+         7. INTERACTIVE MINI-TERMINAL IN HERO
+         ===================================================================== */
+      const TERMINAL_COMMANDS = {
+        whoami:
+          'Muhammad Rumman Umed. MSc Information Security student at UCL (NCSC-certified). BSc CS First Class Honours from University of Essex.',
+        certs:
+          'CompTIA Security+ (SY0-701, 2026 to 2029), Cisco CCNAv7, NCSC Degree Certification (Expected 2027).',
+        stack:
+          'Python, Java, C#, C/C++, React, Flask, Spring Boot, Scikit-Learn, Splunk, Wireshark, Nmap, Metasploit, PhishER, Unity.',
+        focus:
+          'Phishing triage automation, vendor risk tooling, SOC operations, and full-stack software engineering.',
+        contact:
+          'Email: rummanlakhani2005@gmail.com | GitHub: github.com/Rumman05 | London, UK',
+        help:
+          'Available commands: whoami, certs, stack, focus, contact, clear',
+      };
+
+      function runTerminalCommand(rawCmd) {
+        const output = document.getElementById('term-output');
+        if (!output) return;
+        const cmd = rawCmd.trim().toLowerCase();
+        if (!cmd) return;
+
+        if (cmd === 'clear') {
+          output.innerHTML = '';
+          return;
+        }
+
+        const response =
+          TERMINAL_COMMANDS[cmd] ||
+          `Command not found: "${cmd}". Try whoami, certs, stack, focus, contact, or clear.`;
+
+        const entry = document.createElement('div');
+        entry.innerHTML = `
+          <span class="text-emerald-400">$</span> <span class="text-zinc-100"></span>
+          <p class="mt-0.5 text-zinc-400"></p>
+        `;
+        entry.querySelector('span.text-zinc-100').textContent = cmd;
+        entry.querySelector('p').textContent = response;
+        output.appendChild(entry);
+        output.scrollTop = output.scrollHeight;
+      }
+
+      /* =====================================================================
+         8. COMMAND PALETTE (Cmd+K / Ctrl+K)
+         ===================================================================== */
+      const cmdModal = document.getElementById('cmd-modal');
+      const cmdInput = document.getElementById('cmd-input');
+      const cmdList = document.getElementById('cmd-list');
+      let cmdIndex = 0;
+
+      const COMMANDS = [
+        { label: 'Jump to Experience', hint: 'Section', action: () => scrollToSection('#experience') },
+        { label: 'Jump to Projects', hint: 'Section', action: () => scrollToSection('#projects') },
+        { label: 'Jump to Education & Certifications', hint: 'Section', action: () => scrollToSection('#education') },
+        { label: 'Jump to Skills', hint: 'Section', action: () => scrollToSection('#skills') },
+        { label: 'Jump to Contact', hint: 'Section', action: () => scrollToSection('#contact') },
+        { label: 'Filter Projects: Cyber Security', hint: 'Filter', action: () => { renderProjects('Cyber Security'); scrollToSection('#projects'); } },
+        { label: 'Filter Projects: Enterprise & AI', hint: 'Filter', action: () => { renderProjects('Enterprise & AI'); scrollToSection('#projects'); } },
+        { label: 'Filter Projects: Software & Games', hint: 'Filter', action: () => { renderProjects('Software & Games'); scrollToSection('#projects'); } },
+        { label: 'Show All Projects', hint: 'Filter', action: () => { renderProjects('all'); scrollToSection('#projects'); } },
+        { label: 'Toggle Dark / Light Theme', hint: 'Action', action: () => toggleTheme() },
+        { label: 'Copy Email (rummanlakhani2005@gmail.com)', hint: 'Action', action: () => copyEmailToClipboard() },
+      ];
+
+      function scrollToSection(selector) {
+        const el = document.querySelector(selector);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }
+
+      function getFilteredCommands() {
+        const q = (cmdInput ? cmdInput.value : '').trim().toLowerCase();
+        if (!q) return COMMANDS;
+        return COMMANDS.filter((c) => c.label.toLowerCase().includes(q) || c.hint.toLowerCase().includes(q));
+      }
+
+      function renderCommandList() {
+        if (!cmdList) return;
+        const items = getFilteredCommands();
+        if (cmdIndex >= items.length) cmdIndex = 0;
+        if (cmdIndex < 0) cmdIndex = Math.max(0, items.length - 1);
+
+        if (items.length === 0) {
+          cmdList.innerHTML = '<li class="px-3 py-6 text-center font-mono text-xs text-zinc-500">No matching commands</li>';
+          return;
+        }
+
+        cmdList.innerHTML = items
+          .map((item, idx) => {
+            const active = idx === cmdIndex;
+            const cls = active
+              ? 'bg-emerald-500/15 text-emerald-900 dark:text-emerald-200 border-emerald-500/40'
+              : 'text-zinc-700 dark:text-zinc-300 border-transparent hover:bg-zinc-200/70 dark:hover:bg-zinc-900';
+            return `
+              <li role="option" aria-selected="${active}">
+                <button type="button" data-cmd-idx="${idx}" class="w-full flex items-center justify-between px-3 py-2.5 rounded-lg border text-left text-sm transition-colors ${cls}">
+                  <span>${item.label}</span>
+                  <span class="font-mono text-[11px] text-zinc-500 dark:text-zinc-400">${item.hint}</span>
+                </button>
+              </li>
+            `;
+          })
+          .join('');
+
+        cmdList.querySelectorAll('button[data-cmd-idx]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const idx = Number(btn.getAttribute('data-cmd-idx'));
+            const filtered = getFilteredCommands();
+            if (filtered[idx]) {
+              closeCmdPalette();
+              filtered[idx].action();
+            }
+          });
+        });
+      }
+
+      function openCmdPalette() {
+        if (!cmdModal || !cmdInput) return;
+        cmdInput.value = '';
+        cmdIndex = 0;
+        renderCommandList();
+        cmdModal.classList.remove('hidden');
+        cmdModal.classList.add('flex');
+        cmdInput.focus();
+      }
+
+      function closeCmdPalette() {
+        if (!cmdModal) return;
+        cmdModal.classList.add('hidden');
+        cmdModal.classList.remove('flex');
+      }
+
+      /* =====================================================================
+         9. LIVE LONDON CLOCK
+         ===================================================================== */
+      function updateLondonClock() {
+        const el = document.getElementById('london-clock');
+        if (!el) return;
+        try {
+          const now = new Date();
+          el.textContent = new Intl.DateTimeFormat('en-GB', {
+            timeZone: 'Europe/London',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false,
+          }).format(now);
+        } catch (e) {
+          el.textContent = new Date().toTimeString().slice(0, 8);
+        }
+      }
+
+      /* =====================================================================
+         10. RESPONSIVE HERO NETWORK CANVAS (Respects prefers-reduced-motion)
+         ===================================================================== */
+      function initHeroCanvas() {
+        const canvas = document.getElementById('hero-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let nodes = [];
+        let mouse = { x: null, y: null };
+        let animFrameId = null;
+
+        function resize() {
+          const parent = canvas.parentElement;
+          if (!parent) return;
+          canvas.width = parent.offsetWidth;
+          canvas.height = parent.offsetHeight;
+          createNodes();
+          if (reducedMotion) drawFrame();
+        }
+
+        function createNodes() {
+          const area = canvas.width * canvas.height;
+          const count = Math.min(52, Math.max(18, Math.floor(area / 22000)));
+          nodes = [];
+          for (let i = 0; i < count; i++) {
+            nodes.push({
+              x: Math.random() * canvas.width,
+              y: Math.random() * canvas.height,
+              vx: (Math.random() - 0.5) * 0.35,
+              vy: (Math.random() - 0.5) * 0.35,
+              r: Math.random() * 1.6 + 1.2,
+              accent: i % 4 === 0,
             });
           }
-        });
-      }, { rootMargin: '-50% 0px -50% 0px' });
-
-      sections.forEach(section => {
-        observer.observe(section);
-      });
-
-      // Dynamically set copyright year
-      document.getElementById('copyright-year').textContent = new Date().getFullYear();
-
-      // === NEW PARTICLE PLEXUS ANIMATION SCRIPT ===
-      const canvas = document.getElementById('particle-plexus-canvas');
-      const ctx = canvas.getContext('2d');
-      let particlesArray;
-
-      // Get the parent container dimensions
-      const container = canvas.parentElement;
-      canvas.width = container.offsetWidth;
-      canvas.height = container.offsetHeight;
-
-      let mouse = {
-        x: null,
-        y: null,
-        radius: (canvas.height/110) * (canvas.width/110)
-      }
-
-      window.addEventListener('mousemove', function(event) {
-        let rect = canvas.getBoundingClientRect();
-        mouse.x = event.clientX - rect.left;
-        mouse.y = event.clientY - rect.top;
-      });
-
-      window.addEventListener('mouseout', function(){
-        mouse.x = undefined;
-        mouse.y = undefined;
-      });
-
-      class Particle {
-        constructor(x, y, directionX, directionY, size, color) {
-          this.x = x;
-          this.y = y;
-          this.directionX = directionX;
-          this.directionY = directionY;
-          this.size = size;
-          this.color = color;
         }
-        draw() {
-          ctx.beginPath();
-          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-          ctx.fillStyle = 'rgba(66, 153, 225, 0.5)';
-          ctx.fill();
-        }
-        update() {
-          if(this.x > canvas.width || this.x < 0) {
-            this.directionX = -this.directionX;
-          }
-          if(this.y > canvas.height || this.y < 0) {
-            this.directionY = -this.directionY;
-          }
-          this.x += this.directionX;
-          this.y += this.directionY;
-          this.draw();
-        }
-      }
 
-      function init() {
-        particlesArray = [];
-        let numberOfParticles = (canvas.height * canvas.width) / 9000;
-        for (let i = 0; i < numberOfParticles; i++) {
-          let size = (Math.random() * 2) + 1;
-          let x = (Math.random() * ((canvas.width - size * 2) - (size * 2)) + size * 2);
-          let y = (Math.random() * ((canvas.height - size * 2) - (size * 2)) + size * 2);
-          let directionX = (Math.random() * 0.4) - 0.2;
-          let directionY = (Math.random() * 0.4) - 0.2;
-          let color = 'rgba(66, 153, 225, 0.5)';
-          particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
-        }
-      }
+        function drawFrame() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          const isDark = document.documentElement.classList.contains('dark');
+          const maxDist = 145;
 
-      function connect() {
-        let opacityValue = 1;
-        for (let a = 0; a < particlesArray.length; a++) {
-          for (let b = a; b < particlesArray.length; b++) {
-            let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x))
-            + ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+          for (let i = 0; i < nodes.length; i++) {
+            const n = nodes[i];
+            if (!reducedMotion) {
+              n.x += n.vx;
+              n.y += n.vy;
+              if (n.x < 0 || n.x > canvas.width) n.vx *= -1;
+              if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
 
-            if (distance < (canvas.width/7) * (canvas.height/7)) {
-              opacityValue = 1 - (distance/20000);
-              ctx.strokeStyle = `rgba(102, 126, 234, ${opacityValue})`;
-              ctx.lineWidth = 1;
-              ctx.beginPath();
-              ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-              ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
-              ctx.stroke();
+              // Subtle mouse attraction/reaction
+              if (mouse.x !== null && mouse.y !== null) {
+                const dx = mouse.x - n.x;
+                const dy = mouse.y - n.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 160 && dist > 1) {
+                  n.x += (dx / dist) * 0.25;
+                  n.y += (dy / dist) * 0.25;
+                }
+              }
             }
+
+            // Connect nearby nodes
+            for (let j = i + 1; j < nodes.length; j++) {
+              const m = nodes[j];
+              const dx = n.x - m.x;
+              const dy = n.y - m.y;
+              const dist = Math.sqrt(dx * dx + dy * dy);
+              if (dist < maxDist) {
+                const alpha = (1 - dist / maxDist) * (isDark ? 0.28 : 0.22);
+                ctx.strokeStyle = n.accent
+                  ? `rgba(56, 189, 248, ${alpha})`
+                  : `rgba(16, 185, 129, ${alpha})`;
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(n.x, n.y);
+                ctx.lineTo(m.x, m.y);
+                ctx.stroke();
+              }
+            }
+
+            // Draw node
+            ctx.beginPath();
+            ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+            ctx.fillStyle = n.accent
+              ? (isDark ? 'rgba(56, 189, 248, 0.75)' : 'rgba(2, 132, 199, 0.65)')
+              : (isDark ? 'rgba(16, 185, 129, 0.75)' : 'rgba(5, 150, 105, 0.65)');
+            ctx.fill();
+          }
+
+          if (!reducedMotion) {
+            animFrameId = requestAnimationFrame(drawFrame);
           }
         }
-      }
 
-      function animate() {
-        requestAnimationFrame(animate);
-        ctx.clearRect(0,0,canvas.width, canvas.height);
-        for (let i = 0; i < particlesArray.length; i++) {
-          particlesArray[i].update();
+        const heroSection = document.getElementById('top');
+        if (heroSection) {
+          heroSection.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            mouse.x = e.clientX - rect.left;
+            mouse.y = e.clientY - rect.top;
+          });
+          heroSection.addEventListener('mouseleave', () => {
+            mouse.x = null;
+            mouse.y = null;
+          });
         }
-        connect();
+
+        window.addEventListener('resize', resize);
+        resize();
+        if (!reducedMotion) {
+          if (animFrameId) cancelAnimationFrame(animFrameId);
+          drawFrame();
+        }
       }
 
-      window.addEventListener('resize', function(){
-        canvas.width = container.offsetWidth;
-        canvas.height = container.offsetHeight;
-        mouse.radius = (canvas.height/110) * (canvas.width/110);
-        init();
+      /* =====================================================================
+         11. BOOTSTRAP ON DOM READY
+         ===================================================================== */
+      document.addEventListener('DOMContentLoaded', () => {
+        // Dynamic copyright year
+        const yearEl = document.getElementById('copyright-year');
+        if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+        // Start London clock
+        updateLondonClock();
+        setInterval(updateLondonClock, 1000);
+
+        // Render projects & bind spotlight hover
+        renderProjects('all');
+        bindSpotlights();
+
+        // Filter tab clicks
+        document.querySelectorAll('.filter-tab').forEach((tab) => {
+          tab.addEventListener('click', () => {
+            renderProjects(tab.getAttribute('data-filter'));
+          });
+        });
+
+        // Theme toggle button
+        const themeBtn = document.getElementById('theme-toggle');
+        if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
+
+        // Copy email buttons
+        document.querySelectorAll('[data-copy-email]').forEach((btn) => {
+          btn.addEventListener('click', copyEmailToClipboard);
+        });
+
+        // Mobile menu toggle
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const openIcon = document.getElementById('menu-open-icon');
+        const closeIcon = document.getElementById('menu-close-icon');
+        if (mobileBtn && mobileMenu) {
+          const setMenu = (open) => {
+            mobileMenu.classList.toggle('hidden', !open);
+            openIcon.classList.toggle('hidden', open);
+            closeIcon.classList.toggle('hidden', !open);
+            mobileBtn.setAttribute('aria-expanded', String(open));
+          };
+          mobileBtn.addEventListener('click', () => setMenu(mobileMenu.classList.contains('hidden')));
+          document.querySelectorAll('.mobile-nav-link').forEach((link) => {
+            link.addEventListener('click', () => setMenu(false));
+          });
+        }
+
+        // Mini-terminal events
+        const termForm = document.getElementById('term-form');
+        const termInput = document.getElementById('term-input');
+        if (termForm && termInput) {
+          termForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            runTerminalCommand(termInput.value);
+            termInput.value = '';
+          });
+        }
+        document.querySelectorAll('.term-chip').forEach((chip) => {
+          chip.addEventListener('click', () => {
+            runTerminalCommand(chip.getAttribute('data-term-cmd'));
+          });
+        });
+
+        // Project modal close events
+        const closeProjBtn = document.getElementById('close-project-modal');
+        if (closeProjBtn) closeProjBtn.addEventListener('click', closeProjectModal);
+        if (projectModal) {
+          projectModal.addEventListener('click', (e) => {
+            if (e.target === projectModal) closeProjectModal();
+          });
+        }
+
+        // Command palette open/close & keyboard navigation
+        const openCmdBtn = document.getElementById('open-cmd-btn');
+        if (openCmdBtn) openCmdBtn.addEventListener('click', openCmdPalette);
+        if (cmdModal) {
+          cmdModal.addEventListener('click', (e) => {
+            if (e.target === cmdModal) closeCmdPalette();
+          });
+        }
+        if (cmdInput) {
+          cmdInput.addEventListener('input', () => {
+            cmdIndex = 0;
+            renderCommandList();
+          });
+          cmdInput.addEventListener('keydown', (e) => {
+            const items = getFilteredCommands();
+            if (e.key === 'ArrowDown') {
+              e.preventDefault();
+              cmdIndex = (cmdIndex + 1) % Math.max(1, items.length);
+              renderCommandList();
+            } else if (e.key === 'ArrowUp') {
+              e.preventDefault();
+              cmdIndex = (cmdIndex - 1 + Math.max(1, items.length)) % Math.max(1, items.length);
+              renderCommandList();
+            } else if (e.key === 'Enter') {
+              e.preventDefault();
+              if (items[cmdIndex]) {
+                closeCmdPalette();
+                items[cmdIndex].action();
+              }
+            }
+          });
+        }
+
+        // Global keyboard shortcuts (Cmd+K / Ctrl+K, Escape)
+        document.addEventListener('keydown', (e) => {
+          if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+            e.preventDefault();
+            if (cmdModal && !cmdModal.classList.contains('hidden')) {
+              closeCmdPalette();
+            } else {
+              closeProjectModal();
+              openCmdPalette();
+            }
+          } else if (e.key === 'Escape') {
+            closeCmdPalette();
+            closeProjectModal();
+          }
+        });
+
+        // Start Hero Network Canvas
+        initHeroCanvas();
       });
-
-      init();
-      animate();
-
-    });
+    })();
   </script>
 </body>
 </html>
